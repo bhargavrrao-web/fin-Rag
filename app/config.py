@@ -11,6 +11,9 @@ class Settings(BaseSettings):
     logfire_token: str = ""
     daily_limit: int = 200
     rate_limit: str = "10/minute"
+    # Cross-encoder logits below this mean "evidence is weak". 0.0 is only a placeholder:
+    # calibrate it on real queries in Phase 4 (answerable vs unanswerable scores).
+    weak_score_threshold: float = 0.0
 
 
 def get_settings() -> Settings:
