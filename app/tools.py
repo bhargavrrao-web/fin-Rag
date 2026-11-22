@@ -134,6 +134,14 @@ class ToolBox:
         self.retriever = retriever
         self.weak_threshold = weak_threshold
         self.overlap_words = overlap_words
+        # (company, fiscal_year, page) shown to the model, in order, de-duplicated.
+        # The evaluation uses it to compute retrieval hit rate for the agent.
+        self.seen: list[tuple[str, int, int]] = []
+
+    def _mark_seen(self, company: str, fiscal_year: int, page: int) -> None:
+        key = (company, fiscal_year, page)
+        if key not in self.seen:
+            self.seen.append(key)
 
     def call(self, name: str, raw_args: str | dict) -> str:
         """Run a tool; always returns a string (errors are returned, not raised)."""
@@ -154,6 +162,8 @@ class ToolBox:
         hits = self.retriever.search(
             args.query, args.company, args.fiscal_year, args.top_k, mode="hybrid_rerank"
         )
+        for h in hits:
+            self._mark_seen(h.company, h.fiscal_year, h.page)
         best = max((h.score for h in hits), default=None)
         weak = best is None or best < self.weak_threshold
         out: dict[str, Any] = {
@@ -196,6 +206,8 @@ class ToolBox:
                 w = t.split()
                 words.extend(w if i == 0 else w[self.overlap_words :])
             body = " ".join(words)
+            if rows:
+                self._mark_seen(company, args.fiscal_year, page)
             if tables:
                 body += "\n\nTables on this page:\n" + "\n\n".join(tables)
             parts.append(f"--- {company} FY{args.fiscal_year % 100} page {page} ---\n{body}")

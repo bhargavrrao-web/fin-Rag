@@ -8,6 +8,7 @@ class Settings(BaseSettings):
 
     llm_model: str = "gpt-4o-mini"
     llm_api_key: str = ""
+    judge_model: str = ""  # model for the eval LLM-judge; empty = same as llm_model
     logfire_token: str = ""
     daily_limit: int = 200
     rate_limit: str = "10/minute"

@@ -21,6 +21,12 @@ from app.tools import ToolBox, tool_schemas
 MAX_STEPS = 6
 PREVIEW_CHARS = 300
 
+# Shared with baseline.py so every config answers in the same format.
+JSON_FORMAT = """When you are done, reply with ONLY this JSON (no other text):
+{"answer": "<text>", "citations": [{"company": "<lowercase>", "fiscal_year": <4-digit int>, \
+"page": <int>}], "status": "answered" | "not_found"}
+For not_found, use an empty citations list."""
+
 SYSTEM_PROMPT = """You are a research assistant answering questions about annual reports of \
 Indian IT companies. Use ONLY the provided tools; never use outside knowledge.
 
@@ -62,6 +68,7 @@ class AgentResult:
     completion_tokens: int = 0
     cost_usd: float = 0.0
     latency_ms: int = 0
+    retrieved: list[dict] = field(default_factory=list)  # pages the tools showed the model
 
 
 _logfire_ready = False
@@ -84,6 +91,15 @@ def parse_final(text: str | None) -> FinalAnswer:
     """Parse the model's final message. Tolerates ```json fences, which models love to add."""
     cleaned = re.sub(r"^```(?:json)?\s*|\s*```$", "", (text or "").strip())
     return FinalAnswer.model_validate_json(cleaned)
+
+
+def add_usage(result: AgentResult, response: Any) -> None:
+    """Accumulate token counts and (if the model is priced) cost from one LLM response."""
+    usage = getattr(response, "usage", None)
+    if usage:
+        result.prompt_tokens += getattr(usage, "prompt_tokens", 0) or 0
+        result.completion_tokens += getattr(usage, "completion_tokens", 0) or 0
+    result.cost_usd += _cost(response)
 
 
 def _cost(response: Any) -> float:
@@ -114,6 +130,7 @@ def run_agent(
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user", "content": question},
     ]
+    toolbox.seen.clear()
     start = time.perf_counter()
     retried = False
 
@@ -126,11 +143,7 @@ def run_agent(
             temperature=0,  # deterministic answers make the evaluation reproducible
             api_key=settings.llm_api_key or None,
         )
-        usage = getattr(resp, "usage", None)
-        if usage:
-            result.prompt_tokens += getattr(usage, "prompt_tokens", 0) or 0
-            result.completion_tokens += getattr(usage, "completion_tokens", 0) or 0
-        result.cost_usd += _cost(resp)
+        add_usage(result, resp)
         return resp.choices[0].message
 
     with _span("agent.run", settings, question=question):
@@ -200,6 +213,9 @@ def run_agent(
             result.answer = "The agent ran out of steps before reaching an answer."
 
     result.latency_ms = int((time.perf_counter() - start) * 1000)
+    result.retrieved = [
+        {"company": c, "fiscal_year": y, "page": p} for c, y, p in toolbox.seen
+    ]
     return result
 
 
