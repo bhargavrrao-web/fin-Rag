@@ -1,0 +1,7 @@
+services:
+  finrag:
+    build: .
+    ports:
+      - "7860:7860"
+    env_file: .env        # LLM_MODEL, LLM_API_KEY, ... (never baked into the image)
+    restart: unless-stopped
