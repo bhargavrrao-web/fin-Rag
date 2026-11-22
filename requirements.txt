@@ -1,0 +1,16 @@
+pymupdf
+sentence-transformers
+faiss-cpu
+rank-bm25
+numpy
+litellm
+fastapi
+uvicorn[standard]
+pydantic>=2
+pydantic-settings
+slowapi
+logfire
+python-dotenv
+pytest
+ruff
+httpx

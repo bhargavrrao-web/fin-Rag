@@ -1,0 +1,12 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+# Raw PDFs are never committed (copyright + size). The small built index is.
+data/raw/*.pdf
+*.egg-info/
+.idea/
+.vscode/
