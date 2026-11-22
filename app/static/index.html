@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FinRAG Agent</title>
+  <meta name="description" content="Ask questions about Indian IT company annual reports. Every answer cites the page.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <div>
+        <h1>FinRAG Agent</h1>
+        <p class="tagline">An AI research assistant for Indian IT annual reports. Answers cite company, year and page.</p>
+      </div>
+      <a id="github" class="btn-link" href="#" hidden target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <nav class="wrap tabs" role="tablist">
+      <button class="tab active" role="tab" id="tab-ask" aria-selected="true" data-panel="panel-ask">Ask</button>
+      <button class="tab" role="tab" id="tab-eval" aria-selected="false" data-panel="panel-eval">Evaluation</button>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section id="panel-ask" class="panel" role="tabpanel" aria-labelledby="tab-ask">
+      <div id="docs" class="muted"></div>
+      <div id="chips" class="chips" aria-label="Example questions"></div>
+
+      <form id="ask-form" class="ask-form">
+        <label for="question" class="sr-only">Your question</label>
+        <textarea id="question" rows="2" maxlength="500" required
+                  placeholder="Ask about revenue, margins, headcount, attrition..."></textarea>
+        <div class="form-row">
+          <span id="counter" class="muted">0 / 500</span>
+          <button id="submit" type="submit" class="btn">Ask</button>
+        </div>
+      </form>
+
+      <div id="result" aria-live="polite"></div>
+    </section>
+
+    <section id="panel-eval" class="panel" role="tabpanel" aria-labelledby="tab-eval" hidden>
+      <div id="eval-content" class="muted">Loading...</div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Model: <span id="model">...</span></p>
+      <p>Answers can be wrong. Always check the cited page.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

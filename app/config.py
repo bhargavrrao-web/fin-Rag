@@ -14,6 +14,8 @@ class Settings(BaseSettings):
     rate_limit: str = "10/minute"
     # Cross-encoder logits below this mean "evidence is weak". 0.0 is only a placeholder:
     # calibrate it on real queries in Phase 4 (answerable vs unanswerable scores).
+    cors_origins: str = ""  # comma-separated; empty = same-origin only (locked down)
+    github_url: str = ""  # shown in the UI header when set
     weak_score_threshold: float = 0.0
 
 
