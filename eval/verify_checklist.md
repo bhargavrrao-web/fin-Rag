@@ -26,9 +26,9 @@ For each question: open the PDF at the page, confirm the expected answer is real
 - [ ] **L08** (lookup) What was TCS's revenue from operations in FY 2026, in ₹ crore?
   - Expected: 267021
   - Open `data/raw/tcs_FY26.pdf` at page 69
-- [ ] **L09** (lookup) What was TCS's profit after tax in FY 2026, in ₹ crore?
-  - Expected: 52820
-  - Open `data/raw/tcs_FY26.pdf` at page 69
+- [ ] **L09** (lookup) What was TCS's reported consolidated profit attributable to shareholders of the Company in FY 2026, in ₹ crore (the 'Reported' figure, after exceptional items)?
+  - Expected: 49210
+  - Open `data/raw/tcs_FY26.pdf` at page 35
 - [ ] **L10** (lookup) How many permanent employees did TCS have at the end of FY 2026?
   - Expected: 584519
   - Open `data/raw/tcs_FY26.pdf` at page 108
@@ -54,11 +54,15 @@ For each question: open the PDF at the page, confirm the expected answer is real
 - [ ] **M02** (multi_step) What was Infosys's net profit margin in fiscal 2026 (net profit divided by revenues), in percent?
   - Expected: 16.48
   - Open `data/raw/infosys_FY26.pdf` at page 16
-- [ ] **M03** (multi_step) By what percent did TCS's profit after tax grow from FY 2025 to FY 2026?
+- [ ] **M03** (multi_step) By what percent did TCS's consolidated profit attributable to shareholders, excluding exceptional items, grow from FY 2025 to FY 2026?
   - Expected: 8.79
+  - Open `data/raw/tcs_FY26.pdf` at page 35
+  - Open `data/raw/tcs_FY26.pdf` at page 58
   - Open `data/raw/tcs_FY26.pdf` at page 69
-- [ ] **M04** (multi_step) What was TCS's net profit margin in FY 2026 (profit after tax divided by revenue from operations), in percent?
+- [ ] **M04** (multi_step) What was TCS's profit margin in FY 2026, computed as consolidated profit attributable to shareholders (excluding exceptional items) divided by revenue from operations, in percent?
   - Expected: 19.78
+  - Open `data/raw/tcs_FY26.pdf` at page 35
+  - Open `data/raw/tcs_FY26.pdf` at page 58
   - Open `data/raw/tcs_FY26.pdf` at page 69
 - [ ] **M05** (multi_step) What was TCS's EBIT margin in FY 2026 (EBIT divided by revenue from operations), in percent?
   - Expected: 25.03
@@ -82,9 +86,10 @@ For each question: open the PDF at the page, confirm the expected answer is real
   - Expected: TCS was higher: 13.7% for TCS versus 12.6% for Infosys.
   - Open `data/raw/infosys_FY26.pdf` at page 144
   - Open `data/raw/tcs_FY26.pdf` at page 55
-- [ ] **C02** (comparison) Which had the higher net profit margin in FY2026, Infosys or TCS? Give both margins.
-  - Expected: TCS: 19.78% versus Infosys: 16.48%.
+- [ ] **C02** (comparison) Which had the higher net profit margin in FY2026, Infosys (net profit) or TCS (reported consolidated profit attributable to shareholders)? Give both margins.
+  - Expected: TCS: 18.43% versus Infosys: 16.48%.
   - Open `data/raw/infosys_FY26.pdf` at page 16
+  - Open `data/raw/tcs_FY26.pdf` at page 35
   - Open `data/raw/tcs_FY26.pdf` at page 69
 - [ ] **C03** (comparison) Among Infosys, TCS and Wipro, which grew its revenue fastest from FY2025 to FY2026 (in ₹)? Give the growth rates.
   - Expected: Infosys, at about 9.61% versus TCS 4.58% and Wipro 4.17%.
