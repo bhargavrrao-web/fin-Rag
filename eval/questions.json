@@ -1,1 +1,655 @@
-[]
+[
+  {
+    "id": "L01",
+    "category": "lookup",
+    "question": "What were Infosys's consolidated revenues in fiscal 2026, in ₹ crore?",
+    "expected_answer": "178650",
+    "expected_pages": [
+      {
+        "company": "infosys",
+        "fiscal_year": 2026,
+        "page": 16
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "L02",
+    "category": "lookup",
+    "question": "What was Infosys's net profit in fiscal 2026, in ₹ crore?",
+    "expected_answer": "29440",
+    "expected_pages": [
+      {
+        "company": "infosys",
+        "fiscal_year": 2026,
+        "page": 16
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "L03",
+    "category": "lookup",
+    "question": "What was Infosys's basic earnings per share in fiscal 2026, in ₹?",
+    "expected_answer": "71.58",
+    "expected_pages": [
+      {
+        "company": "infosys",
+        "fiscal_year": 2026,
+        "page": 16
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "L04",
+    "category": "lookup",
+    "question": "What was the voluntary attrition rate (total) for permanent employees at Infosys in fiscal 2026, in percent?",
+    "expected_answer": "12.6",
+    "expected_pages": [
+      {
+        "company": "infosys",
+        "fiscal_year": 2026,
+        "page": 144
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "L05",
+    "category": "lookup",
+    "question": "What was Infosys's operating margin in fiscal 2025, in percent?",
+    "expected_answer": "21.1",
+    "expected_pages": [
+      {
+        "company": "infosys",
+        "fiscal_year": 2025,
+        "page": 15
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "L06",
+    "category": "lookup",
+    "question": "What dividend per share did Infosys report for fiscal 2025, in ₹?",
+    "expected_answer": "43.0",
+    "expected_pages": [
+      {
+        "company": "infosys",
+        "fiscal_year": 2025,
+        "page": 15
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "L07",
+    "category": "lookup",
+    "question": "What free cash flow did Infosys report for fiscal 2025, in ₹ crore?",
+    "expected_answer": "34549",
+    "expected_pages": [
+      {
+        "company": "infosys",
+        "fiscal_year": 2025,
+        "page": 15
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "L08",
+    "category": "lookup",
+    "question": "What was TCS's revenue from operations in FY 2026, in ₹ crore?",
+    "expected_answer": "267021",
+    "expected_pages": [
+      {
+        "company": "tcs",
+        "fiscal_year": 2026,
+        "page": 69
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "L09",
+    "category": "lookup",
+    "question": "What was TCS's profit after tax in FY 2026, in ₹ crore?",
+    "expected_answer": "52820",
+    "expected_pages": [
+      {
+        "company": "tcs",
+        "fiscal_year": 2026,
+        "page": 69
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "L10",
+    "category": "lookup",
+    "question": "How many permanent employees did TCS have at the end of FY 2026?",
+    "expected_answer": "584519",
+    "expected_pages": [
+      {
+        "company": "tcs",
+        "fiscal_year": 2026,
+        "page": 108
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "L11",
+    "category": "lookup",
+    "question": "What was TCS's IT services attrition rate for FY 2025, in percent?",
+    "expected_answer": "13.3",
+    "expected_pages": [
+      {
+        "company": "tcs",
+        "fiscal_year": 2025,
+        "page": 13
+      },
+      {
+        "company": "tcs",
+        "fiscal_year": 2025,
+        "page": 85
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "L12",
+    "category": "lookup",
+    "question": "What was TCS's IT services attrition rate for FY 2026, in percent?",
+    "expected_answer": "13.7",
+    "expected_pages": [
+      {
+        "company": "tcs",
+        "fiscal_year": 2026,
+        "page": 55
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "L13",
+    "category": "lookup",
+    "question": "What was Wipro's revenue in FY26, in ₹ million?",
+    "expected_answer": "928093",
+    "expected_pages": [
+      {
+        "company": "wipro",
+        "fiscal_year": 2026,
+        "page": 25
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "L14",
+    "category": "lookup",
+    "question": "What was Wipro's operating margin in FY26, in percent?",
+    "expected_answer": "16.3",
+    "expected_pages": [
+      {
+        "company": "wipro",
+        "fiscal_year": 2026,
+        "page": 25
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "L15",
+    "category": "lookup",
+    "question": "What was Wipro's net worth in FY25, in ₹ million?",
+    "expected_answer": "830447",
+    "expected_pages": [
+      {
+        "company": "wipro",
+        "fiscal_year": 2025,
+        "page": 26
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "M01",
+    "category": "multi_step",
+    "question": "By what percent did Infosys's revenue (in ₹ crore) grow from fiscal 2025 to fiscal 2026?",
+    "expected_answer": "9.61",
+    "expected_pages": [
+      {
+        "company": "infosys",
+        "fiscal_year": 2026,
+        "page": 16
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.01,
+    "verified": false
+  },
+  {
+    "id": "M02",
+    "category": "multi_step",
+    "question": "What was Infosys's net profit margin in fiscal 2026 (net profit divided by revenues), in percent?",
+    "expected_answer": "16.48",
+    "expected_pages": [
+      {
+        "company": "infosys",
+        "fiscal_year": 2026,
+        "page": 16
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.01,
+    "verified": false
+  },
+  {
+    "id": "M03",
+    "category": "multi_step",
+    "question": "By what percent did TCS's profit after tax grow from FY 2025 to FY 2026?",
+    "expected_answer": "8.79",
+    "expected_pages": [
+      {
+        "company": "tcs",
+        "fiscal_year": 2026,
+        "page": 69
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.01,
+    "verified": false
+  },
+  {
+    "id": "M04",
+    "category": "multi_step",
+    "question": "What was TCS's net profit margin in FY 2026 (profit after tax divided by revenue from operations), in percent?",
+    "expected_answer": "19.78",
+    "expected_pages": [
+      {
+        "company": "tcs",
+        "fiscal_year": 2026,
+        "page": 69
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.01,
+    "verified": false
+  },
+  {
+    "id": "M05",
+    "category": "multi_step",
+    "question": "What was TCS's EBIT margin in FY 2026 (EBIT divided by revenue from operations), in percent?",
+    "expected_answer": "25.03",
+    "expected_pages": [
+      {
+        "company": "tcs",
+        "fiscal_year": 2026,
+        "page": 69
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.01,
+    "verified": false
+  },
+  {
+    "id": "M06",
+    "category": "multi_step",
+    "question": "By what percent did Wipro's revenue grow from FY25 to FY26, computed from the revenue figures in ₹ million?",
+    "expected_answer": "4.17",
+    "expected_pages": [
+      {
+        "company": "wipro",
+        "fiscal_year": 2026,
+        "page": 25
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.01,
+    "verified": false
+  },
+  {
+    "id": "M07",
+    "category": "multi_step",
+    "question": "What was Wipro's net income margin in FY26 (profit attributable to equity holders divided by revenue), in percent?",
+    "expected_answer": "14.22",
+    "expected_pages": [
+      {
+        "company": "wipro",
+        "fiscal_year": 2026,
+        "page": 25
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.01,
+    "verified": false
+  },
+  {
+    "id": "M08",
+    "category": "multi_step",
+    "question": "By what percent did Wipro's net worth grow from FY25 to FY26?",
+    "expected_answer": "6.92",
+    "expected_pages": [
+      {
+        "company": "wipro",
+        "fiscal_year": 2026,
+        "page": 25
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.01,
+    "verified": false
+  },
+  {
+    "id": "M09",
+    "category": "multi_step",
+    "question": "By what percent did TCS's net worth grow from FY 2025 to FY 2026?",
+    "expected_answer": "13.17",
+    "expected_pages": [
+      {
+        "company": "tcs",
+        "fiscal_year": 2026,
+        "page": 69
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.01,
+    "verified": false
+  },
+  {
+    "id": "M10",
+    "category": "multi_step",
+    "question": "By what percent did Infosys's basic earnings per share grow from fiscal 2025 to fiscal 2026?",
+    "expected_answer": "10.98",
+    "expected_pages": [
+      {
+        "company": "infosys",
+        "fiscal_year": 2026,
+        "page": 16
+      }
+    ],
+    "numeric": true,
+    "tolerance": 0.01,
+    "verified": false
+  },
+  {
+    "id": "C01",
+    "category": "comparison",
+    "question": "Which had the higher attrition rate in fiscal 2026, Infosys (voluntary attrition) or TCS (IT services attrition)? Give both figures.",
+    "expected_answer": "TCS was higher: 13.7% for TCS versus 12.6% for Infosys.",
+    "expected_pages": [
+      {
+        "company": "infosys",
+        "fiscal_year": 2026,
+        "page": 144
+      },
+      {
+        "company": "tcs",
+        "fiscal_year": 2026,
+        "page": 55
+      }
+    ],
+    "numeric": false,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "C02",
+    "category": "comparison",
+    "question": "Which had the higher net profit margin in FY2026, Infosys or TCS? Give both margins.",
+    "expected_answer": "TCS: 19.78% versus Infosys: 16.48%.",
+    "expected_pages": [
+      {
+        "company": "infosys",
+        "fiscal_year": 2026,
+        "page": 16
+      },
+      {
+        "company": "tcs",
+        "fiscal_year": 2026,
+        "page": 69
+      }
+    ],
+    "numeric": false,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "C03",
+    "category": "comparison",
+    "question": "Among Infosys, TCS and Wipro, which grew its revenue fastest from FY2025 to FY2026 (in ₹)? Give the growth rates.",
+    "expected_answer": "Infosys, at about 9.61% versus TCS 4.58% and Wipro 4.17%.",
+    "expected_pages": [
+      {
+        "company": "infosys",
+        "fiscal_year": 2026,
+        "page": 16
+      },
+      {
+        "company": "tcs",
+        "fiscal_year": 2026,
+        "page": 69
+      },
+      {
+        "company": "wipro",
+        "fiscal_year": 2026,
+        "page": 25
+      }
+    ],
+    "numeric": false,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "C04",
+    "category": "comparison",
+    "question": "Which of Infosys, TCS and Wipro had the largest revenue in FY2026 in rupee terms?",
+    "expected_answer": "TCS (₹267,021 crore), ahead of Infosys (₹178,650 crore) and Wipro (₹928,093 million, about ₹92,809 crore).",
+    "expected_pages": [
+      {
+        "company": "infosys",
+        "fiscal_year": 2026,
+        "page": 16
+      },
+      {
+        "company": "tcs",
+        "fiscal_year": 2026,
+        "page": 69
+      },
+      {
+        "company": "wipro",
+        "fiscal_year": 2026,
+        "page": 25
+      }
+    ],
+    "numeric": false,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "C05",
+    "category": "comparison",
+    "question": "Whose net worth grew faster from FY2025 to FY2026, TCS or Wipro? Give both growth rates.",
+    "expected_answer": "TCS: 13.17% versus Wipro: 6.92%.",
+    "expected_pages": [
+      {
+        "company": "tcs",
+        "fiscal_year": 2026,
+        "page": 69
+      },
+      {
+        "company": "wipro",
+        "fiscal_year": 2026,
+        "page": 25
+      }
+    ],
+    "numeric": false,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "C06",
+    "category": "comparison",
+    "question": "Which has the higher share of women on its Board of Directors in its latest report, Infosys or TCS? Give both percentages.",
+    "expected_answer": "TCS at 25% versus Infosys at 22.2%.",
+    "expected_pages": [
+      {
+        "company": "infosys",
+        "fiscal_year": 2026,
+        "page": 144
+      },
+      {
+        "company": "tcs",
+        "fiscal_year": 2026,
+        "page": 108
+      }
+    ],
+    "numeric": false,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "C07",
+    "category": "comparison",
+    "question": "Did Infosys's voluntary attrition for permanent employees go up or down from fiscal 2025 to fiscal 2026? Give both figures.",
+    "expected_answer": "It went down: from 14.1% in fiscal 2025 to 12.6% in fiscal 2026.",
+    "expected_pages": [
+      {
+        "company": "infosys",
+        "fiscal_year": 2026,
+        "page": 144
+      }
+    ],
+    "numeric": false,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "C08",
+    "category": "comparison",
+    "question": "Did TCS's IT services attrition rate rise or fall from FY 2025 to FY 2026? Give both figures.",
+    "expected_answer": "It rose slightly: from 13.3% in FY 2025 to 13.7% in FY 2026.",
+    "expected_pages": [
+      {
+        "company": "tcs",
+        "fiscal_year": 2025,
+        "page": 13
+      },
+      {
+        "company": "tcs",
+        "fiscal_year": 2025,
+        "page": 85
+      },
+      {
+        "company": "tcs",
+        "fiscal_year": 2026,
+        "page": 55
+      }
+    ],
+    "numeric": false,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "U01",
+    "category": "unanswerable",
+    "question": "What was HCLTech's revenue in FY2026?",
+    "expected_answer": "Not in the documents (the agent should answer not_found).",
+    "expected_pages": [],
+    "numeric": false,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "U02",
+    "category": "unanswerable",
+    "question": "What will Infosys's revenue be in fiscal 2030?",
+    "expected_answer": "Not in the documents (the agent should answer not_found).",
+    "expected_pages": [],
+    "numeric": false,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "U03",
+    "category": "unanswerable",
+    "question": "What was Cognizant's attrition rate in 2025?",
+    "expected_answer": "Not in the documents (the agent should answer not_found).",
+    "expected_pages": [],
+    "numeric": false,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "U04",
+    "category": "unanswerable",
+    "question": "What is Wipro's market share in the Brazilian banking sector?",
+    "expected_answer": "Not in the documents (the agent should answer not_found).",
+    "expected_pages": [],
+    "numeric": false,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "U05",
+    "category": "unanswerable",
+    "question": "What was Accenture's revenue growth in 2025?",
+    "expected_answer": "Not in the documents (the agent should answer not_found).",
+    "expected_pages": [],
+    "numeric": false,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "U06",
+    "category": "unanswerable",
+    "question": "What was Infosys's closing share price on 15 August 2025?",
+    "expected_answer": "Not in the documents (the agent should answer not_found).",
+    "expected_pages": [],
+    "numeric": false,
+    "tolerance": 0.005,
+    "verified": false
+  },
+  {
+    "id": "U07",
+    "category": "unanswerable",
+    "question": "How many freshers will TCS hire in FY2027?",
+    "expected_answer": "Not in the documents (the agent should answer not_found).",
+    "expected_pages": [],
+    "numeric": false,
+    "tolerance": 0.005,
+    "verified": false
+  }
+]

@@ -147,3 +147,18 @@ def test_throttle_spaces_calls_apart():
     assert [wrapped() for _ in range(3)] == ["ok"] * 3
     assert slept == [5.0, 5.0]  # first call is immediate; then 60/12 = 5 s between calls
     assert throttled(print, rpm=0) is print  # rpm 0 disables throttling
+
+
+def test_verify_helper_marks_only_requested_ids(tmp_path):
+    from eval.verify import mark_verified, render_checklist
+
+    f = tmp_path / "q.json"
+    base = {"question": "?", "expected_answer": "a", "expected_pages": [], "numeric": False,
+            "tolerance": 0.01, "verified": False, "category": "unanswerable"}
+    f.write_text(json.dumps([{**base, "id": "a"}, {**base, "id": "b"}]))
+    mark_verified(["a"], f)
+    data = json.loads(f.read_text())
+    assert [q["verified"] for q in data] == [True, False]
+    assert "- [x] **a**" in render_checklist(f) and "- [ ] **b**" in render_checklist(f)
+    with pytest.raises(SystemExit):
+        mark_verified(["zzz"], f)

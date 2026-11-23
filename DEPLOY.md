@@ -3,7 +3,21 @@
 Prerequisites: the index is built and committed (`data/index/` and `data/processed/chunks.jsonl`,
 under 50 MB), and you have an LLM API key. Never commit `.env`.
 
-## Option 1: Hugging Face Spaces (Docker)
+## Option 0: free live demo from your own PC (no hosting account)
+
+Docker Spaces on Hugging Face may be paid-only for new accounts, and free hosts such as Render
+have too little memory (512 MB) for the two models. A Cloudflare quick tunnel needs no account:
+
+```bash
+winget install --id Cloudflare.cloudflared         # once (Windows)
+uvicorn app.main:app --port 7860                    # terminal 1
+cloudflared tunnel --url http://localhost:7860      # terminal 2: prints a public https://....trycloudflare.com link
+```
+
+The link works while both commands run. Set `DAILY_LIMIT` low (for example 40) in `.env` so a shared
+link cannot use up your free LLM quota.
+
+## Option 1: Hugging Face Spaces (Docker, if your account allows it)
 
 1. Create a Space at https://huggingface.co/new-space. SDK: **Docker**, hardware: **CPU basic**.
 2. The top of `README.md` already contains the Space front matter (`sdk: docker`, `app_port: 7860`).
