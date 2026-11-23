@@ -60,6 +60,12 @@ hand against the PDFs. **Status: TBD, the evaluation has not been run yet.**
 
 Failure analysis summary: TBD (the full per-question list will be in `eval/failure_analysis.md`).
 
+## Data
+
+Six reports (Infosys, TCS, Wipro; FY25 and FY26) are indexed: 6,362 chunks. See
+[data/README.md](data/README.md) for sources and the file naming. Citation pages are PDF-viewer
+page numbers, not the numbers printed on the pages.
+
 ## Tech stack
 
 PyMuPDF, sentence-transformers (`BAAI/bge-small-en-v1.5`, `cross-encoder/ms-marco-MiniLM-L-6-v2`),
@@ -117,6 +123,12 @@ data/       raw/ (PDFs, not committed), processed/chunks.jsonl, index/ (FAISS + 
 
 - Only text-based PDFs: scanned pages would need OCR. Table extraction can be noisy on complex
   layouts.
+- Some PDFs extract badly. In the TCS FY25 report many digits come out as `?` (a font-encoding
+  problem), so figures from that report can be unreadable to the model. OCR would fix it.
+- hit@5 counts a hit only when an expected page is retrieved, but the same figure often appears on
+  several pages, so retrieval quality is understated.
+- Free LLM tiers are rate limited (requests per minute and per day), so the demo caps questions
+  per day and the evaluation paces its requests.
 - The daily cap lives in memory and resets when the server restarts.
 - Chunk sizes are in words, not exact tokens.
 - Citations come from the model and are not automatically cross-checked against the pages it saw.
