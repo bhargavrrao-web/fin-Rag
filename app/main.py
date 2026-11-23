@@ -7,6 +7,7 @@ from __future__ import annotations
 import json
 import logging
 import threading
+from contextlib import asynccontextmanager
 from datetime import date
 from pathlib import Path
 
@@ -67,7 +68,22 @@ class DailyCap:
 daily_cap = DailyCap(settings.daily_limit)
 limiter = Limiter(key_func=get_remote_address)  # per-IP
 
-app = FastAPI(title="FinRAG Agent", docs_url=None, redoc_url=None)
+def _warm_up() -> None:
+    """Load the index and both models once, so the first real user doesn't wait ~1 minute."""
+    try:
+        r = get_retriever()
+        r.search("warm up", top_k=1, mode="hybrid_rerank")
+    except Exception:  # noqa: BLE001 - e.g. index not built yet; /ask reports that clearly
+        log.warning("warm-up skipped", exc_info=True)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    threading.Thread(target=_warm_up, daemon=True).start()  # don't block startup
+    yield
+
+
+app = FastAPI(title="FinRAG Agent", docs_url=None, redoc_url=None, lifespan=lifespan)
 app.state.limiter = limiter
 
 # Locked down: with no CORS_ORIGINS set, no cross-origin site may call the API.

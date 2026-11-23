@@ -12,7 +12,7 @@ from typing import Any
 from pydantic import ValidationError
 
 from app.agent import JSON_FORMAT, AgentResult, add_usage, parse_final
-from app.config import Settings, get_settings
+from app.config import Settings, get_settings, llm_kwargs
 from app.retrieval import Retriever
 
 BASELINE_PROMPT = """You answer questions about annual reports of Indian IT companies using \
@@ -59,7 +59,7 @@ def run_baseline(
             model=settings.llm_model,
             messages=messages,
             temperature=0,
-            api_key=settings.llm_api_key or None,
+            **llm_kwargs(settings),
         )
         add_usage(result, resp)
         content = resp.choices[0].message.content

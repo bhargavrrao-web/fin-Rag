@@ -98,3 +98,18 @@ def test_search_flags_weak_evidence():
     assert weak["evidence_weak"] and "note" in weak
     assert not strong["evidence_weak"] and strong["hits"][0]["page"] == 7
     assert empty["evidence_weak"] and empty["best_score"] is None
+
+
+# ---------------------------------------------------------------- company-name resolution
+def test_company_names_are_normalised_and_unknown_ones_explained():
+    r = FakeRetriever([chunk(0, 1, "a b c", company="techm", fy=2023)], hits=[hit(5.0)])
+    box = ToolBox(r)
+    assert box.describe_documents() == "techm (FY23)"
+    # 'Tech-M' squashes to 'techm', so it resolves; no error
+    assert "ERROR" not in box.call("search_documents", {"query": "q", "company": "Tech-M"})
+    # a name that cannot be mapped returns the valid names, so the model can retry
+    err = box.call("search_documents", {"query": "q", "company": "tech mahindra"})
+    assert err.startswith("ERROR: unknown company") and "techm" in err
+    err = box.call("get_pages", {"company": "infosys", "fiscal_year": 2023,
+                                 "start_page": 1, "end_page": 1})
+    assert "unknown company" in err

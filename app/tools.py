@@ -8,6 +8,7 @@ from __future__ import annotations
 import ast
 import json
 import operator
+import re
 from typing import Any
 
 from pydantic import BaseModel, Field, ValidationError, field_validator
@@ -154,13 +155,46 @@ class ToolBox:
             return getattr(self, name)(args)
         except (json.JSONDecodeError, ValidationError) as e:
             return f"ERROR: invalid arguments: {e}"
+        except ValueError as e:  # e.g. unknown company: message is already model-friendly
+            return f"ERROR: {e}"
         except Exception as e:  # noqa: BLE001 - tool failures must go back to the model
             return f"ERROR: {type(e).__name__}: {e}"
 
+    # ---- which documents exist (the model cannot guess our file-name slugs) ----
+    def _documents(self) -> dict[str, list[int]]:
+        docs: dict[str, set[int]] = {}
+        for c in getattr(self.retriever, "chunks", None) or []:
+            docs.setdefault(c["company"], set()).add(c["fiscal_year"])
+        return {k: sorted(v) for k, v in sorted(docs.items())}
+
+    def describe_documents(self) -> str:
+        """One line for the system prompt, e.g. 'techm (FY23); infosys (FY23, FY24)'."""
+        return "; ".join(
+            f"{c} ({', '.join(f'FY{y % 100:02d}' for y in ys)})"
+            for c, ys in self._documents().items()
+        )
+
+    def _resolve_company(self, name: str | None) -> str | None:
+        """Map what the model typed ('Tech Mahindra', 'TECHM') to an indexed slug, or raise a
+        message listing the valid names so the model can retry correctly."""
+        if name is None:
+            return None
+        known = self._documents()
+        if not known:  # no index metadata available (unit tests): trust the caller
+            return name.lower()
+        squash = lambda t: re.sub(r"[^a-z0-9]", "", t.lower())  # noqa: E731
+        for slug in known:
+            if squash(slug) == squash(name):
+                return slug
+        raise ValueError(
+            f"unknown company '{name}'. Use exactly one of: {', '.join(known)}"
+        )
+
     def search_documents(self, args: SearchArgs) -> str:
+        company = self._resolve_company(args.company)
         # Always the strongest mode; its rerank score is also our refusal signal.
         hits = self.retriever.search(
-            args.query, args.company, args.fiscal_year, args.top_k, mode="hybrid_rerank"
+            args.query, company, args.fiscal_year, args.top_k, mode="hybrid_rerank"
         )
         for h in hits:
             self._mark_seen(h.company, h.fiscal_year, h.page)
@@ -188,7 +222,7 @@ class ToolBox:
         return json.dumps(out, ensure_ascii=False)
 
     def get_pages(self, args: GetPagesArgs) -> str:
-        company = args.company.lower()
+        company = self._resolve_company(args.company)
         parts = []
         for page in range(args.start_page, args.end_page + 1):
             rows = [

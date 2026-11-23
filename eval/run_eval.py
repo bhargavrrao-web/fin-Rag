@@ -24,7 +24,7 @@ from pydantic import BaseModel, field_validator, model_validator
 
 from app.agent import AgentResult, run_agent
 from app.baseline import run_baseline
-from app.config import Settings, get_settings
+from app.config import Settings, get_settings, llm_kwargs
 from app.retrieval import Retriever
 from app.tools import ToolBox
 
@@ -127,7 +127,7 @@ def judge(
             },
         ],
         temperature=0,
-        api_key=settings.llm_api_key or None,
+        **llm_kwargs(settings),
     )
     text = re.sub(r"^```(?:json)?\s*|\s*```$", "", resp.choices[0].message.content.strip())
     data = json.loads(text)

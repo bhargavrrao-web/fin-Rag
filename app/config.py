@@ -8,6 +8,8 @@ class Settings(BaseSettings):
 
     llm_model: str = "gpt-4o-mini"
     llm_api_key: str = ""
+    llm_timeout: int = 60  # seconds per LLM request; a stalled provider must not hang the app
+    llm_retries: int = 2  # litellm retries on 429/503 with backoff
     judge_model: str = ""  # model for the eval LLM-judge; empty = same as llm_model
     logfire_token: str = ""
     daily_limit: int = 200
@@ -17,6 +19,15 @@ class Settings(BaseSettings):
     cors_origins: str = ""  # comma-separated; empty = same-origin only (locked down)
     github_url: str = ""  # shown in the UI header when set
     weak_score_threshold: float = 0.0
+
+
+def llm_kwargs(settings: Settings) -> dict:
+    """Connection arguments shared by every litellm.completion call."""
+    return {
+        "api_key": settings.llm_api_key or None,
+        "timeout": settings.llm_timeout,
+        "num_retries": settings.llm_retries,
+    }
 
 
 def get_settings() -> Settings:

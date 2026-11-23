@@ -15,7 +15,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ValidationError
 
-from app.config import Settings, get_settings
+from app.config import Settings, get_settings, llm_kwargs
 from app.tools import ToolBox, tool_schemas
 
 MAX_STEPS = 6
@@ -126,8 +126,12 @@ def run_agent(
         completion = litellm.completion
 
     result = AgentResult(answer="", citations=[], status="not_found")
+    docs = toolbox.describe_documents()
+    system = SYSTEM_PROMPT
+    if docs:  # the model cannot guess our file-name slugs (e.g. 'techm'), so tell it
+        system += f"\n\nIndexed documents (use these exact company names in tool calls): {docs}"
     messages: list[dict] = [
-        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "system", "content": system},
         {"role": "user", "content": question},
     ]
     toolbox.seen.clear()
@@ -141,15 +145,25 @@ def run_agent(
             tools=tool_schemas(),
             tool_choice=tool_choice,
             temperature=0,  # deterministic answers make the evaluation reproducible
-            api_key=settings.llm_api_key or None,
+            **llm_kwargs(settings),
         )
         add_usage(result, resp)
         return resp.choices[0].message
 
     with _span("agent.run", settings, question=question):
         for step in range(max_steps):
-            # On the last step forbid tools, so the model must produce an answer.
-            msg = call_llm("none" if step == max_steps - 1 else "auto")
+            last = step == max_steps - 1
+            if last:
+                # Some providers ignore tool_choice="none", so also tell the model in words.
+                messages.append(
+                    {
+                        "role": "user",
+                        "content": "No more tool calls are allowed. Using only what you have "
+                        "found so far, reply now with the final JSON answer "
+                        "(status not_found if the evidence is insufficient).",
+                    }
+                )
+            msg = call_llm("none" if last else "auto")
             tool_calls = getattr(msg, "tool_calls", None) or []
 
             if tool_calls:

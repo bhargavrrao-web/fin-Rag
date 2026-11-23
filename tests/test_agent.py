@@ -93,3 +93,21 @@ def test_ran_out_of_steps():
 
 def test_parse_final_accepts_code_fences():
     assert parse_final(f"```json\n{FINAL}\n```").status == "answered"
+
+
+def test_system_prompt_lists_indexed_documents():
+    chunks = [{"company": "techm", "fiscal_year": 2023, "page": 1, "type": "text",
+               "text": "x", "doc_id": "techm_FY23"}]
+    box = ToolBox(retriever=SimpleNamespace(chunks=chunks))
+    llm = ScriptedLLM(text_msg(FINAL))
+    run_agent("q", box, SETTINGS, completion=llm)
+    assert "techm (FY23)" in llm.calls[0]["messages"][0]["content"]
+
+
+def test_last_step_tells_the_model_in_words_to_answer():
+    calc = tool_msg("calculator", {"expression": "1+1"})
+    llm = ScriptedLLM(calc, text_msg(FINAL))
+    run_agent("q", BOX, SETTINGS, completion=llm, max_steps=2)
+    last_call_messages = llm.calls[-1]["messages"]
+    assert "No more tool calls" in last_call_messages[-1]["content"]
+    assert llm.calls[-1]["tool_choice"] == "none"
