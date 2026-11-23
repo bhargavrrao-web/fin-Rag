@@ -132,3 +132,18 @@ def test_llm_errors_are_recorded_not_raised():
     rec = res["records"][0]
     assert rec["correct"] is False and "api down" in rec["error"]
     assert res["summary"]["A"]["errors"] == 1
+
+
+def test_throttle_spaces_calls_apart():
+    from eval.run_eval import throttled
+
+    now, slept = [0.0], []
+
+    def fake_sleep(sec):
+        slept.append(sec)
+        now[0] += sec
+
+    wrapped = throttled(lambda **kw: "ok", rpm=12, clock=lambda: now[0], sleep=fake_sleep)
+    assert [wrapped() for _ in range(3)] == ["ok"] * 3
+    assert slept == [5.0, 5.0]  # first call is immediate; then 60/12 = 5 s between calls
+    assert throttled(print, rpm=0) is print  # rpm 0 disables throttling

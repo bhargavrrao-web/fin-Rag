@@ -15,6 +15,8 @@ import json
 import random
 import re
 import statistics
+import threading
+import time
 from collections.abc import Callable
 from datetime import datetime
 from pathlib import Path
@@ -42,6 +44,30 @@ numbers, years, directions of change) in the expected answer and contradicts non
 Extra correct detail is fine. Vague, partial, hedged or wrong answers are correct=false. \
 Judge only against the expected answer, not your own knowledge.
 Reply with ONLY JSON: {"correct": true|false, "reason": "<one short sentence>"}"""
+
+
+# ---------------------------------------------------------------- rate limiting
+def throttled(
+    completion: Callable[..., Any],
+    rpm: float,
+    clock: Callable[[], float] = time.monotonic,
+    sleep: Callable[[float], None] = time.sleep,
+) -> Callable[..., Any]:
+    """Wrap an LLM call so calls are at least 60/rpm seconds apart. Free API tiers allow only
+    a few requests per minute; pacing ourselves is cheaper than failing and retrying."""
+    if rpm <= 0:
+        return completion
+    interval, last, lock = 60.0 / rpm, [-1e18], threading.Lock()
+
+    def wrapper(**kwargs: Any) -> Any:
+        with lock:
+            wait = last[0] + interval - clock()
+            if wait > 0:
+                sleep(wait)
+            last[0] = clock()
+        return completion(**kwargs)
+
+    return wrapper
 
 
 # ---------------------------------------------------------------- question schema
@@ -342,6 +368,8 @@ def main() -> None:
     ap.add_argument("--questions", default="eval/questions.json")
     ap.add_argument("--out-dir", default="eval")
     ap.add_argument("--configs", default="A,B,C")
+    ap.add_argument("--rpm", type=float, default=12,
+                    help="max LLM requests per minute (0 = no limit); default fits a 15 RPM tier")
     args = ap.parse_args()
 
     all_qs = load_questions(args.questions)
@@ -349,7 +377,10 @@ def main() -> None:
     print(f"{len(verified)} verified of {len(all_qs)} questions")
     if not verified:
         raise SystemExit("No verified questions: nothing to score, no results written.")
+    import litellm
+
     res = run_eval(verified, Retriever.from_disk(), get_settings(),
+                   completion=throttled(litellm.completion, args.rpm),
                    configs=tuple(args.configs.split(",")))
     write_outputs(res, args.out_dir)
     print(render_results_md(res))
