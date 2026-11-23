@@ -132,6 +132,8 @@ def test_llm_errors_are_recorded_not_raised():
     rec = res["records"][0]
     assert rec["correct"] is False and "api down" in rec["error"]
     assert res["summary"]["A"]["errors"] == 1
+    assert res["summary"]["A"]["n"] == 0 and res["summary"]["A"]["answer_accuracy"] is None
+    assert "1 of 1" in render_results_md(res) and "API errors" in render_failures_md(res)
 
 
 def test_throttle_spaces_calls_apart():
@@ -177,3 +179,37 @@ def test_dry_run_banner_and_refusal_to_write_into_eval(monkeypatch):
     monkeypatch.setattr(sys, "argv", ["run_eval", "--dry-run", "--out-dir", "eval"])
     with pytest.raises(SystemExit, match="another --out-dir"):
         ev.main()
+
+
+def test_transient_errors_are_retried_then_succeed(monkeypatch):
+    from eval import run_eval as ev
+
+    monkeypatch.setattr(ev, "RETRY_SLEEP", 0)
+
+    class ServiceUnavailableError(Exception):  # same class NAME litellm uses
+        pass
+
+    calls = {"n": 0}
+
+    def flaky(**kw):
+        calls["n"] += 1
+        if calls["n"] <= 2:
+            raise ServiceUnavailableError("503 busy")
+        return fake_completion(**kw)
+
+    rec = ev.evaluate_one(q("a"), "A", StubRetriever(), SETTINGS, flaky)
+    assert rec["error"] is None and rec["correct"] and rec["attempts"] == 3
+
+
+def test_non_transient_errors_are_not_retried(monkeypatch):
+    from eval import run_eval as ev
+
+    monkeypatch.setattr(ev, "RETRY_SLEEP", 0)
+    calls = {"n": 0}
+
+    def bad_request(**kw):
+        calls["n"] += 1
+        raise ValueError("bad request")
+
+    rec = ev.evaluate_one(q("a"), "A", StubRetriever(), SETTINGS, bad_request)
+    assert rec["error"] and calls["n"] == 1 and rec["attempts"] == 1

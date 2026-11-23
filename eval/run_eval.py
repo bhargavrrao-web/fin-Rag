@@ -154,6 +154,7 @@ def judge(
         ],
         temperature=0,
         **llm_kwargs(settings),
+        drop_params=True,  # some models reject temperature; the judge still works without it
     )
     text = re.sub(r"^```(?:json)?\s*|\s*```$", "", resp.choices[0].message.content.strip())
     data = json.loads(text)
@@ -161,7 +162,7 @@ def judge(
 
 
 # ---------------------------------------------------------------- running one question
-def evaluate_one(
+def _evaluate_once(
     q: Question,
     config: str,
     retriever: Retriever,
@@ -206,6 +207,31 @@ def evaluate_one(
     return rec
 
 
+TRANSIENT = ("Timeout", "ServiceUnavailableError", "RateLimitError", "APIConnectionError",
+             "InternalServerError")
+RETRIES = 3  # extra attempts after the first
+RETRY_SLEEP = 20  # seconds; multiplied by the attempt number
+
+
+def evaluate_one(
+    q: Question,
+    config: str,
+    retriever: Retriever,
+    settings: Settings,
+    completion: Callable[..., Any],
+) -> dict:
+    """Run one question, retrying provider hiccups (503, timeout, 429) with a growing pause.
+    Real wrong answers are never retried: only errors."""
+    for attempt in range(RETRIES + 1):
+        rec = _evaluate_once(q, config, retriever, settings, completion)
+        transient = bool(rec["error"]) and rec["error"].startswith(TRANSIENT)
+        if not transient or attempt == RETRIES:
+            break
+        time.sleep(RETRY_SLEEP * (attempt + 1))
+    rec["attempts"] = attempt + 1
+    return rec
+
+
 def likely_cause(rec: dict) -> str:
     """Heuristic label for the failure table. A human should confirm each one."""
     if rec["error"]:
@@ -228,9 +254,12 @@ def _mean(xs: list[float]) -> float | None:
 def summarize(records: list[dict]) -> dict:
     out: dict[str, Any] = {}
     for cfg in CONFIGS:
-        rs = [r for r in records if r["config"] == cfg]
-        if not rs:
+        all_rs = [r for r in records if r["config"] == cfg]
+        if not all_rs:
             continue
+        # A run that errored out (API down) says nothing about answer quality: count it
+        # separately instead of as a wrong answer.
+        rs = [r for r in all_rs if not r["error"]]
         answerable = [r for r in rs if r["category"] != "unanswerable"]
         unans = [r for r in rs if r["category"] == "unanswerable"]
         with_pages = [r for r in rs if r["hit"] is not None]
@@ -241,6 +270,7 @@ def summarize(records: list[dict]) -> dict:
         out[cfg] = {
             "name": CONFIGS[cfg][0],
             "n": len(rs),
+            "n_total": len(all_rs),
             "hit_at_5": _mean([float(r["hit"]) for r in with_pages]),
             "answer_accuracy": _mean([float(r["correct"]) for r in answerable]),
             "refusal_accuracy": _mean([float(r["correct"]) for r in unans]),
@@ -248,7 +278,7 @@ def summarize(records: list[dict]) -> dict:
             "avg_latency_ms": _mean([r["latency_ms"] for r in rs]),
             "avg_tokens": _mean([r["tokens"] for r in rs]),
             "avg_cost_usd": _mean([r["cost_usd"] for r in rs]),
-            "errors": sum(1 for r in rs if r["error"]),
+            "errors": len(all_rs) - len(rs),
             "accuracy_by_category": {
                 cat: _mean([float(r["correct"]) for r in rs if r["category"] == cat])
                 for cat in CATEGORIES
@@ -305,6 +335,10 @@ def _pct(x: float | None) -> str:
     return "n/a" if x is None else f"{x * 100:.0f}%"
 
 
+def _num(x: float | None, div: float = 1, unit: str = "", digits: int = 1) -> str:
+    return "n/a" if x is None else f"{x / div:.{digits}f}{unit}"
+
+
 def render_results_md(res: dict) -> str:
     m, summ = res["meta"], res["summary"]
     lines = [
@@ -314,17 +348,20 @@ def render_results_md(res: dict) -> str:
         f"Run on {m['date']} | model `{m['llm_model']}` | judge `{m['judge_model']}` | "
         f"{m['n_questions']} verified questions", "",
         "| Config | hit@5 | Answer acc. | Refusal acc. | False refusals | Avg latency | "
-        "Avg tokens | Avg cost |",
-        "|---|---|---|---|---|---|---|---|",
+        "Avg tokens | Avg cost | Errors |",
+        "|---|---|---|---|---|---|---|---|---|",
     ]
     for cfg, s in summ.items():
         cost = "n/a" if not s["avg_cost_usd"] else f"${s['avg_cost_usd']:.4f}"
         lines.append(
             f"| {cfg}) {s['name']} | {_pct(s['hit_at_5'])} | {_pct(s['answer_accuracy'])} | "
             f"{_pct(s['refusal_accuracy'])} | {_pct(s['false_refusal_rate'])} | "
-            f"{s['avg_latency_ms'] / 1000:.1f}s | {s['avg_tokens']:.0f} | {cost} |"
+            f"{_num(s['avg_latency_ms'], 1000, 's')} | {_num(s['avg_tokens'], 1, '', 0)} | "
+            f"{cost} | {s['errors']} of {s['n_total']} |"
         )
-    lines += ["", "hit@5 for C = expected page appeared in any search/page-read result the "
+    lines += ["", "Errors = runs that failed for infrastructure reasons (API busy, timeouts) even "
+              "after retries; they are excluded from every other column.", "",
+              "hit@5 for C = expected page appeared in any search/page-read result the "
               "agent saw, so it is not strictly comparable with A and B.", "",
               "## Accuracy by category", "",
               "| Config | " + " | ".join(CATEGORIES) + " |", "|---|" + "---|" * len(CATEGORIES)]
@@ -343,9 +380,11 @@ def render_results_md(res: dict) -> str:
 
 
 def render_failures_md(res: dict) -> str:
-    bad = [r for r in res["records"] if not r["correct"]]
+    errs = [r for r in res["records"] if r["error"]]
+    bad = [r for r in res["records"] if not r["correct"] and not r["error"]]
     lines = ["# Failure analysis", "",
-             f"{len(bad)} wrong answers out of {len(res['records'])} scored runs. "
+             f"{len(bad)} wrong answers out of {len(res['records']) - len(errs)} scored runs "
+             f"({len(errs)} further runs failed with API errors, listed at the end). "
              "'Likely cause' is an automatic heuristic: confirm by hand.", ""]
     for r in bad:
         lines += [
@@ -355,7 +394,10 @@ def render_failures_md(res: dict) -> str:
             f"- **Got ({r['status']}):** {r['answer'] or '-'}",
             f"- **Likely cause:** {likely_cause(r)}", "",
         ]
-    return "\n".join(lines)
+    if errs:
+        lines += ["## Runs that failed with API errors (not wrong answers)", ""]
+        lines += [f"- [{r['config']}] {r['id']}: {r['error'][:120]}" for r in errs]
+    return "\n".join(lines) + "\n"
 
 
 def write_outputs(res: dict, out_dir: str | Path) -> None:
