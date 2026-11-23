@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     llm_api_key: str = ""
     llm_timeout: int = 60  # seconds per LLM request; a stalled provider must not hang the app
     llm_retries: int = 2  # litellm retries on 429/503 with backoff
+    llm_fallback_model: str = ""  # used only if the main model keeps failing (503, timeout)
     judge_model: str = ""  # model for the eval LLM-judge; empty = same as llm_model
     logfire_token: str = ""
     daily_limit: int = 200
@@ -23,11 +24,16 @@ class Settings(BaseSettings):
 
 def llm_kwargs(settings: Settings) -> dict:
     """Connection arguments shared by every litellm.completion call."""
-    return {
+    kwargs: dict = {
         "api_key": settings.llm_api_key or None,
         "timeout": settings.llm_timeout,
         "num_retries": settings.llm_retries,
+        # Some models reject parameters such as temperature; drop those instead of failing.
+        "drop_params": True,
     }
+    if settings.llm_fallback_model:
+        kwargs["fallbacks"] = [settings.llm_fallback_model]  # tried after retries are used up
+    return kwargs
 
 
 def get_settings() -> Settings:

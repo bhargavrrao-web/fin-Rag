@@ -154,7 +154,6 @@ def judge(
         ],
         temperature=0,
         **llm_kwargs(settings),
-        drop_params=True,  # some models reject temperature; the judge still works without it
     )
     text = re.sub(r"^```(?:json)?\s*|\s*```$", "", resp.choices[0].message.content.strip())
     data = json.loads(text)
@@ -434,7 +433,9 @@ def main() -> None:
 
     import litellm
 
-    res = run_eval(chosen, Retriever.from_disk(), get_settings(),
+    settings = get_settings()
+    settings.llm_fallback_model = ""  # one model per evaluation: no silent fallback mixing models
+    res = run_eval(chosen, Retriever.from_disk(), settings,
                    completion=throttled(litellm.completion, args.rpm),
                    configs=tuple(args.configs.split(",")))
     if args.dry_run:

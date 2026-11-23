@@ -111,3 +111,12 @@ def test_last_step_tells_the_model_in_words_to_answer():
     last_call_messages = llm.calls[-1]["messages"]
     assert "No more tool calls" in last_call_messages[-1]["content"]
     assert llm.calls[-1]["tool_choice"] == "none"
+
+
+def test_llm_kwargs_adds_fallback_only_when_configured():
+    from app.config import llm_kwargs
+
+    base = llm_kwargs(Settings(_env_file=None))
+    assert "fallbacks" not in base and base["drop_params"] is True and base["num_retries"] == 2
+    with_fb = llm_kwargs(Settings(_env_file=None, llm_fallback_model="gemini/other"))
+    assert with_fb["fallbacks"] == ["gemini/other"]
