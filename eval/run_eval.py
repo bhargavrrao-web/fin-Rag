@@ -309,6 +309,8 @@ def render_results_md(res: dict) -> str:
     m, summ = res["meta"], res["summary"]
     lines = [
         "# Evaluation results", "",
+        *(["> **DRY RUN: includes UNVERIFIED questions. Do not cite these numbers.**", ""]
+          if m.get("dry_run") else []),
         f"Run on {m['date']} | model `{m['llm_model']}` | judge `{m['judge_model']}` | "
         f"{m['n_questions']} verified questions", "",
         "| Config | hit@5 | Answer acc. | Refusal acc. | False refusals | Avg latency | "
@@ -370,18 +372,32 @@ def main() -> None:
     ap.add_argument("--configs", default="A,B,C")
     ap.add_argument("--rpm", type=float, default=12,
                     help="max LLM requests per minute (0 = no limit); default fits a 15 RPM tier")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="smoke test: also score UNVERIFIED questions. Results are not citable, "
+                    "so --out-dir must not be 'eval'")
+    ap.add_argument("--ids", help="comma-separated question ids to run (default: all)")
     args = ap.parse_args()
 
+    if args.dry_run and Path(args.out_dir).resolve() == Path("eval").resolve():
+        raise SystemExit("--dry-run results include unverified questions: use another --out-dir.")
     all_qs = load_questions(args.questions)
-    verified = [q for q in all_qs if q.verified]
-    print(f"{len(verified)} verified of {len(all_qs)} questions")
-    if not verified:
+    chosen = [q for q in all_qs if args.dry_run or q.verified]
+    if args.ids:
+        wanted = set(args.ids.split(","))
+        chosen = [q for q in chosen if q.id in wanted]
+    print(f"{len(chosen)} questions to run ({sum(q.verified for q in chosen)} verified, "
+          f"{len(all_qs)} in file)")
+    if not chosen:
         raise SystemExit("No verified questions: nothing to score, no results written.")
+
     import litellm
 
-    res = run_eval(verified, Retriever.from_disk(), get_settings(),
+    res = run_eval(chosen, Retriever.from_disk(), get_settings(),
                    completion=throttled(litellm.completion, args.rpm),
                    configs=tuple(args.configs.split(",")))
+    if args.dry_run:
+        res["meta"]["dry_run"] = True
+    Path(args.out_dir).mkdir(parents=True, exist_ok=True)
     write_outputs(res, args.out_dir)
     print(render_results_md(res))
 

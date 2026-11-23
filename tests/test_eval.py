@@ -162,3 +162,18 @@ def test_verify_helper_marks_only_requested_ids(tmp_path):
     assert "- [x] **a**" in render_checklist(f) and "- [ ] **b**" in render_checklist(f)
     with pytest.raises(SystemExit):
         mark_verified(["zzz"], f)
+
+
+def test_dry_run_banner_and_refusal_to_write_into_eval(monkeypatch):
+    import sys
+
+    from eval import run_eval as ev
+
+    res = run_eval([q("a")], StubRetriever(), SETTINGS, completion=fake_completion, configs=("A",))
+    res["meta"]["dry_run"] = True
+    assert "DRY RUN" in render_results_md(res)
+    assert "DRY RUN" not in render_results_md(run_eval(
+        [q("a")], StubRetriever(), SETTINGS, completion=fake_completion, configs=("A",)))
+    monkeypatch.setattr(sys, "argv", ["run_eval", "--dry-run", "--out-dir", "eval"])
+    with pytest.raises(SystemExit, match="another --out-dir"):
+        ev.main()

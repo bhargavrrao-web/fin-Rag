@@ -1,0 +1,15 @@
+{
+  "embed_model": "BAAI/bge-small-en-v1.5",
+  "dim": 384,
+  "n_chunks": 6362,
+  "chunk_words": 350,
+  "overlap_words": 60,
+  "docs": [
+    "infosys_FY25",
+    "infosys_FY26",
+    "tcs_FY25",
+    "tcs_FY26",
+    "wipro_FY25",
+    "wipro_FY26"
+  ]
+}
