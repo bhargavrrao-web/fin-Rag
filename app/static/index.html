@@ -3,52 +3,110 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FinRAG Agent</title>
-  <meta name="description" content="Ask questions about Indian IT company annual reports. Every answer cites the page.">
+  <title>FinRAG research desk</title>
+  <meta name="description" content="Ask questions about annual reports and check each answer against the cited page.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="preload" href="fonts/source-serif-4-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
+
   <header class="site-header">
-    <div class="wrap header-row">
-      <div>
-        <h1>FinRAG Agent</h1>
-        <p class="tagline">An AI research assistant for Indian IT annual reports. Answers cite company, year and page.</p>
+    <div class="wrap header-inner">
+      <div class="brand">
+        <a class="wordmark" href="/">FinRAG</a>
+        <p class="tagline">Ask about annual reports. Check the answer against the cited page.</p>
       </div>
-      <a id="github" class="btn-link" href="#" hidden target="_blank" rel="noopener">GitHub</a>
+      <div class="header-meta">
+        <span class="model" title="Language model">Model <span id="model-name">loading</span></span>
+        <a id="github-link" class="text-link" href="#" target="_blank" rel="noopener" hidden>GitHub</a>
+        <button id="theme-toggle" class="btn btn-quiet" type="button" aria-label="Switch to dark theme">Dark theme</button>
+      </div>
     </div>
-    <nav class="wrap tabs" role="tablist">
-      <button class="tab active" role="tab" id="tab-ask" aria-selected="true" data-panel="panel-ask">Ask</button>
-      <button class="tab" role="tab" id="tab-eval" aria-selected="false" data-panel="panel-eval">Evaluation</button>
-    </nav>
   </header>
 
-  <main class="wrap">
-    <section id="panel-ask" class="panel" role="tabpanel" aria-labelledby="tab-ask">
-      <div id="docs" class="muted"></div>
-      <div id="chips" class="chips" aria-label="Example questions"></div>
+  <div class="wrap">
+    <div class="tabs" role="tablist" aria-label="Sections">
+      <button class="tab" role="tab" id="tab-ask" aria-selected="true" aria-controls="panel-ask" tabindex="0">Ask</button>
+      <button class="tab" role="tab" id="tab-eval" aria-selected="false" aria-controls="panel-eval" tabindex="-1">Evaluation</button>
+    </div>
+  </div>
 
-      <form id="ask-form" class="ask-form">
-        <label for="question" class="sr-only">Your question</label>
-        <textarea id="question" rows="2" maxlength="500" required
-                  placeholder="Ask about revenue, margins, headcount, attrition..."></textarea>
-        <div class="form-row">
-          <span id="counter" class="muted">0 / 500</span>
-          <button id="submit" type="submit" class="btn">Ask</button>
+  <main id="main" class="wrap">
+    <section id="panel-ask" role="tabpanel" aria-labelledby="tab-ask" class="desk">
+      <div class="desk-main stack">
+        <div class="indexed stack-sm">
+          <p class="indexed-line" id="indexed-line">Six reports indexed. Answers cite company, year and page.</p>
+          <ul class="chip-list" id="doc-chips" aria-label="Indexed reports"></ul>
         </div>
-      </form>
 
-      <div id="result" aria-live="polite"></div>
+        <form id="ask-form" class="ask stack-sm" autocomplete="off">
+          <label for="question" class="field-label">Your question</label>
+          <textarea id="question" name="question" rows="2" maxlength="500"
+            placeholder="For example: What was TCS's revenue from operations in FY 2026?"
+            aria-describedby="counter hint"></textarea>
+          <div class="ask-bar">
+            <span id="counter" class="counter" aria-live="off">0 of 500</span>
+            <span id="hint" class="hint">Enter sends. Shift+Enter adds a line.</span>
+            <span class="spacer"></span>
+            <button type="button" id="clear-btn" class="btn btn-quiet">Clear</button>
+            <button type="submit" id="submit-btn" class="btn btn-primary">
+              <span class="spinner" id="spinner" hidden aria-hidden="true"></span>
+              <span id="submit-label">Get answer</span>
+            </button>
+          </div>
+        </form>
+
+        <details class="starters" id="starters" open>
+          <summary>Starter questions</summary>
+          <div class="starter-groups stack-sm">
+          <div class="starter-group">
+            <h2 class="group-title">Look up a figure</h2>
+            <div class="chip-row">
+              <button type="button" class="starter" data-q="What were Infosys's consolidated revenues in fiscal 2026, in ₹ crore?">Infosys FY26 consolidated revenue</button>
+              <button type="button" class="starter" data-q="What was Infosys's operating margin in fiscal 2025, in percent?">Infosys FY25 operating margin</button>
+              <button type="button" class="starter" data-q="What was TCS's revenue from operations in FY 2026, in ₹ crore?">TCS FY26 revenue from operations</button>
+            </div>
+          </div>
+          <div class="starter-group">
+            <h2 class="group-title">Compare companies</h2>
+            <div class="chip-row">
+              <button type="button" class="starter" data-q="Which had the higher voluntary or IT attrition rate in fiscal 2026, Infosys or TCS? Give both figures.">Attrition, Infosys and TCS, FY26</button>
+              <button type="button" class="starter" data-q="Among Infosys, TCS and Wipro, which grew its revenue fastest from FY2025 to FY2026 in rupee terms?">Fastest revenue growth, FY25 to FY26</button>
+            </div>
+          </div>
+          <div class="starter-group">
+            <h2 class="group-title">Out of scope (it should decline)</h2>
+            <div class="chip-row">
+              <button type="button" class="starter" data-q="What will Infosys's total revenue be in fiscal year 2030?">Infosys FY30 revenue projection</button>
+              <button type="button" class="starter" data-q="What was Accenture's operating margin in fiscal 2025?">Accenture FY25 operating margin</button>
+            </div>
+          </div>
+          </div>
+        </details>
+
+        <div id="thread" class="thread stack" aria-live="polite" aria-relevant="additions" aria-label="Conversation">
+          <p id="empty-state" class="empty">Ask about revenue, margins, headcount or attrition across six reports.</p>
+        </div>
+      </div>
+
+      <aside id="source-panel" class="source-panel" aria-label="Source">
+        <div class="source-sheet" id="source-sheet">
+          <p class="source-empty">Select a citation to read the cited page here, with the figure highlighted.</p>
+        </div>
+      </aside>
     </section>
 
-    <section id="panel-eval" class="panel" role="tabpanel" aria-labelledby="tab-eval" hidden>
-      <div id="eval-content" class="muted">Loading...</div>
+    <section id="panel-eval" role="tabpanel" aria-labelledby="tab-eval" class="eval stack" hidden>
+      <p class="muted">Loading results.</p>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="wrap">
-      <p>Model: <span id="model">...</span></p>
-      <p>Answers can be wrong. Always check the cited page.</p>
+    <div class="wrap footer-inner">
+      <a id="footer-github" class="text-link" href="#" target="_blank" rel="noopener" hidden>GitHub</a>
+      <p>Answers can be wrong. Check the cited page in the original PDF.</p>
     </div>
   </footer>
 

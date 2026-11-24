@@ -129,8 +129,24 @@ def get_retriever() -> Retriever:
 
 def answer_question(question: str) -> dict:
     """Separate function so tests can replace it without any model or index."""
-    box = ToolBox(get_retriever(), weak_threshold=settings.weak_score_threshold)
-    return result_to_dict(run_agent(question, box, settings))
+    retriever = get_retriever()
+    box = ToolBox(retriever, weak_threshold=settings.weak_score_threshold)
+    res = result_to_dict(run_agent(question, box, settings))
+    for c in res.get("citations", []):
+        if not c.get("passage"):
+            try:
+                chunks = [
+                    ch["text"]
+                    for ch in retriever.chunks
+                    if ch.get("company") == c.get("company")
+                    and ch.get("fiscal_year") == c.get("fiscal_year")
+                    and ch.get("page") == c.get("page")
+                ]
+                if chunks:
+                    c["passage"] = "\n\n".join(chunks)
+            except Exception:
+                pass
+    return res
 
 
 # ---------------------------------------------------------------- routes
@@ -156,7 +172,13 @@ def health():
 
 @app.get("/api/config")
 def config():
-    return {"model": settings.llm_model, "github_url": settings.github_url}
+    return {
+        "model": settings.llm_model,
+        "github_url": settings.github_url,
+        "daily_limit": settings.daily_limit,
+        "daily_count": daily_cap.count,
+        "weak_score_threshold": settings.weak_score_threshold,
+    }
 
 
 @app.get("/api/docs-list")
