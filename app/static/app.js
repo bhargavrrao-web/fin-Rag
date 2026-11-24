@@ -289,7 +289,7 @@ function answerBlock(data, turn) {
   wrap.appendChild(box);
 
   box.appendChild(el("p", "status " + (ok ? "ok" : "warn"), ok ? "Answered" : "Not found in these reports"));
-  box.appendChild(el("p", "answer-text", data.answer || ""));
+  if ((data.answer || "").trim()) box.appendChild(el("p", "answer-text", data.answer));
   if (!ok) box.appendChild(el("p", "answer-hint", "Not found in these reports. Try naming the company and fiscal year."));
 
   const chips = [];
@@ -334,7 +334,10 @@ function answerBlock(data, turn) {
   // The one automatic motion: the cited figure is highlighted when the answer arrives.
   if (wide.matches) {
     if (cites.length) show(cites[0], chips[0], true);
-    else $("source-sheet").replaceChildren(el("p", "source-empty", "This answer has no citation, so there is no page to show."));
+    else if (!$("source-sheet").querySelector(".source-head")) {
+      // Keep an earlier answer's source on screen; only fill an empty panel.
+      $("source-sheet").replaceChildren(el("p", "source-empty", "This answer has no citation, so there is no page to show."));
+    }
   }
   return wrap;
 }
