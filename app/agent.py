@@ -37,6 +37,8 @@ hit looks right but you need the surrounding numbers or table.
 - Use the calculator for ANY arithmetic (growth rates, margins, differences). Never compute \
 in your head.
 - ALWAYS cite: every fact in your answer must come from a page you saw in tool results.
+- Figures such as attrition or headcount often sit in running prose, not tables. If the top hits do not contain the figure, search again with top_k 10 before giving up.
+- The "answer" field must never be empty, even for not_found.
 - If search results say evidence_weak, try at most one differently-worded search. If the \
 documents still do not contain the answer, answer with status "not_found". Do not guess.
 
@@ -50,6 +52,7 @@ class Citation(BaseModel):
     company: str
     fiscal_year: int
     page: int
+    passage: str = ""
 
 
 class FinalAnswer(BaseModel):
@@ -90,7 +93,14 @@ def _span(name: str, settings: Settings, **attrs: Any) -> AbstractContextManager
 def parse_final(text: str | None) -> FinalAnswer:
     """Parse the model's final message. Tolerates ```json fences, which models love to add."""
     cleaned = re.sub(r"^```(?:json)?\s*|\s*```$", "", (text or "").strip())
-    return FinalAnswer.model_validate_json(cleaned)
+    final = FinalAnswer.model_validate_json(cleaned)
+    if not final.answer.strip():
+        # An empty answer would show the user a blank result; make the model say something.
+        raise ValueError(
+            "the answer field is empty. Write one plain sentence: the answer, or for "
+            "not_found, what you searched for and did not find."
+        )
+    return final
 
 
 def add_usage(result: AgentResult, response: Any) -> None:

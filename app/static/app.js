@@ -98,14 +98,15 @@ async function getJSON(url) {
 })();
 
 /* ---------------------------------------------------------------- source panel and highlighting */
-const NUM_RE = /\d[\d,]*(?:\.\d+)?%?/g;
-const normNum = (s) => s.replace(/[,%]/g, "").replace(/\.$/, "");
+// The PDF text layer sometimes splits decimals ("13. 7"), so allow one space after the dot.
+const NUM_RE = /\d[\d,]*(?:\.\s?\d+)?\s?%?/g;
+const normNum = (s) => s.replace(/[,%\s]/g, "").replace(/\.$/, "");
 
 /* Figures and quoted phrases from the answer that are worth marking in the passage. */
 function wantedFigures(answer) {
   const want = new Set();
   for (const m of answer.matchAll(NUM_RE)) {
-    const raw = m[0].replace(/,+$/, "");
+    const raw = m[0].replace(/[,\s]+$/, "");
     const n = normNum(raw);
     const digits = n.replace(".", "").length;
     const isYear = /^(19|20)\d\d$/.test(n);
@@ -117,7 +118,7 @@ function findRanges(passage, answer) {
   const want = wantedFigures(answer);
   const ranges = [];
   for (const m of passage.matchAll(NUM_RE)) {
-    const raw = m[0].replace(/,+$/, "");
+    const raw = m[0].replace(/[,\s]+$/, "");
     if (want.has(normNum(raw))) ranges.push([m.index, m.index + raw.length]);
   }
   const lower = passage.toLowerCase();
