@@ -20,7 +20,15 @@ link cannot use up your free LLM quota.
 ## Option 1: Hugging Face Spaces (Docker, if your account allows it)
 
 1. Create a Space at https://huggingface.co/new-space. SDK: **Docker**, hardware: **CPU basic**.
-2. The top of `README.md` already contains the Space front matter (`sdk: docker`, `app_port: 7860`).
+2. Spaces read their settings from front matter at the top of `README.md`. Add this block to the
+   top of the README on the branch you push to the Space (it is not kept in the GitHub README):
+   ```yaml
+   ---
+   title: FinRAG Agent
+   sdk: docker
+   app_port: 7860
+   ---
+   ```
 3. Add the Space as a git remote and push:
    ```bash
    git remote add space https://huggingface.co/spaces/<your-username>/<space-name>
