@@ -18,5 +18,5 @@ jobs:
           pip install -r requirements.txt
       - name: Lint
         run: ruff check .
-      - name: Test (offline: LLM and embedding calls are mocked, no API keys)
+      - name: "Test (offline, LLM and embedding calls are mocked, no API keys)"
         run: pytest -q
