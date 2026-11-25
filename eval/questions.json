@@ -2,7 +2,7 @@
   {
     "id": "L01",
     "category": "lookup",
-    "question": "What were Infosys's consolidated revenues in fiscal 2026, in ₹ crore?",
+    "question": "What were Infosys's consolidated revenues in fiscal 2026, in \u20b9 crore?",
     "expected_answer": "178650",
     "expected_pages": [
       {
@@ -13,12 +13,12 @@
     ],
     "numeric": true,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "L02",
     "category": "lookup",
-    "question": "What was Infosys's net profit in fiscal 2026, in ₹ crore?",
+    "question": "What was Infosys's net profit in fiscal 2026, in \u20b9 crore?",
     "expected_answer": "29440",
     "expected_pages": [
       {
@@ -29,12 +29,12 @@
     ],
     "numeric": true,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "L03",
     "category": "lookup",
-    "question": "What was Infosys's basic earnings per share in fiscal 2026, in ₹?",
+    "question": "What was Infosys's basic earnings per share in fiscal 2026, in \u20b9?",
     "expected_answer": "71.58",
     "expected_pages": [
       {
@@ -45,7 +45,7 @@
     ],
     "numeric": true,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "L04",
@@ -61,7 +61,7 @@
     ],
     "numeric": true,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "L05",
@@ -77,12 +77,12 @@
     ],
     "numeric": true,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "L06",
     "category": "lookup",
-    "question": "What dividend per share did Infosys report for fiscal 2025, in ₹?",
+    "question": "What dividend per share did Infosys report for fiscal 2025, in \u20b9?",
     "expected_answer": "43.0",
     "expected_pages": [
       {
@@ -93,12 +93,12 @@
     ],
     "numeric": true,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "L07",
     "category": "lookup",
-    "question": "What free cash flow did Infosys report for fiscal 2025, in ₹ crore?",
+    "question": "What free cash flow did Infosys report for fiscal 2025, in \u20b9 crore?",
     "expected_answer": "34549",
     "expected_pages": [
       {
@@ -109,12 +109,12 @@
     ],
     "numeric": true,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "L08",
     "category": "lookup",
-    "question": "What was TCS's revenue from operations in FY 2026, in ₹ crore?",
+    "question": "What was TCS's revenue from operations in FY 2026, in \u20b9 crore?",
     "expected_answer": "267021",
     "expected_pages": [
       {
@@ -125,12 +125,12 @@
     ],
     "numeric": true,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "L09",
     "category": "lookup",
-    "question": "What was TCS's reported consolidated profit attributable to shareholders of the Company in FY 2026, in ₹ crore (the 'Reported' figure, after exceptional items)?",
+    "question": "What was TCS's reported consolidated profit attributable to shareholders of the Company in FY 2026, in \u20b9 crore (the 'Reported' figure, after exceptional items)?",
     "expected_answer": "49210",
     "expected_pages": [
       {
@@ -141,7 +141,7 @@
     ],
     "numeric": true,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "L10",
@@ -157,7 +157,7 @@
     ],
     "numeric": true,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "L11",
@@ -178,7 +178,7 @@
     ],
     "numeric": true,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "L12",
@@ -194,12 +194,12 @@
     ],
     "numeric": true,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "L13",
     "category": "lookup",
-    "question": "What was Wipro's revenue in FY26, in ₹ million?",
+    "question": "What was Wipro's revenue in FY26, in \u20b9 million?",
     "expected_answer": "928093",
     "expected_pages": [
       {
@@ -210,7 +210,7 @@
     ],
     "numeric": true,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "L14",
@@ -226,12 +226,12 @@
     ],
     "numeric": true,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "L15",
     "category": "lookup",
-    "question": "What was Wipro's net worth in FY25, in ₹ million?",
+    "question": "What was Wipro's net worth in FY25, in \u20b9 million?",
     "expected_answer": "830447",
     "expected_pages": [
       {
@@ -242,12 +242,12 @@
     ],
     "numeric": true,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "M01",
     "category": "multi_step",
-    "question": "By what percent did Infosys's revenue (in ₹ crore) grow from fiscal 2025 to fiscal 2026?",
+    "question": "By what percent did Infosys's revenue (in \u20b9 crore) grow from fiscal 2025 to fiscal 2026?",
     "expected_answer": "9.61",
     "expected_pages": [
       {
@@ -258,7 +258,7 @@
     ],
     "numeric": true,
     "tolerance": 0.01,
-    "verified": false
+    "verified": true
   },
   {
     "id": "M02",
@@ -274,7 +274,7 @@
     ],
     "numeric": true,
     "tolerance": 0.01,
-    "verified": false
+    "verified": true
   },
   {
     "id": "M03",
@@ -300,7 +300,7 @@
     ],
     "numeric": true,
     "tolerance": 0.01,
-    "verified": false
+    "verified": true
   },
   {
     "id": "M04",
@@ -326,7 +326,7 @@
     ],
     "numeric": true,
     "tolerance": 0.01,
-    "verified": false
+    "verified": true
   },
   {
     "id": "M05",
@@ -342,12 +342,12 @@
     ],
     "numeric": true,
     "tolerance": 0.01,
-    "verified": false
+    "verified": true
   },
   {
     "id": "M06",
     "category": "multi_step",
-    "question": "By what percent did Wipro's revenue grow from FY25 to FY26, computed from the revenue figures in ₹ million?",
+    "question": "By what percent did Wipro's revenue grow from FY25 to FY26, computed from the revenue figures in \u20b9 million?",
     "expected_answer": "4.17",
     "expected_pages": [
       {
@@ -358,7 +358,7 @@
     ],
     "numeric": true,
     "tolerance": 0.01,
-    "verified": false
+    "verified": true
   },
   {
     "id": "M07",
@@ -374,7 +374,7 @@
     ],
     "numeric": true,
     "tolerance": 0.01,
-    "verified": false
+    "verified": true
   },
   {
     "id": "M08",
@@ -390,7 +390,7 @@
     ],
     "numeric": true,
     "tolerance": 0.01,
-    "verified": false
+    "verified": true
   },
   {
     "id": "M09",
@@ -406,7 +406,7 @@
     ],
     "numeric": true,
     "tolerance": 0.01,
-    "verified": false
+    "verified": true
   },
   {
     "id": "M10",
@@ -422,7 +422,7 @@
     ],
     "numeric": true,
     "tolerance": 0.01,
-    "verified": false
+    "verified": true
   },
   {
     "id": "C01",
@@ -443,7 +443,7 @@
     ],
     "numeric": false,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "C02",
@@ -469,12 +469,12 @@
     ],
     "numeric": false,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "C03",
     "category": "comparison",
-    "question": "Among Infosys, TCS and Wipro, which grew its revenue fastest from FY2025 to FY2026 (in ₹)? Give the growth rates.",
+    "question": "Among Infosys, TCS and Wipro, which grew its revenue fastest from FY2025 to FY2026 (in \u20b9)? Give the growth rates.",
     "expected_answer": "Infosys, at about 9.61% versus TCS 4.58% and Wipro 4.17%.",
     "expected_pages": [
       {
@@ -495,13 +495,13 @@
     ],
     "numeric": false,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "C04",
     "category": "comparison",
     "question": "Which of Infosys, TCS and Wipro had the largest revenue in FY2026 in rupee terms?",
-    "expected_answer": "TCS (₹267,021 crore), ahead of Infosys (₹178,650 crore) and Wipro (₹928,093 million, about ₹92,809 crore).",
+    "expected_answer": "TCS (\u20b9267,021 crore), ahead of Infosys (\u20b9178,650 crore) and Wipro (\u20b9928,093 million, about \u20b992,809 crore).",
     "expected_pages": [
       {
         "company": "infosys",
@@ -521,7 +521,7 @@
     ],
     "numeric": false,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "C05",
@@ -542,7 +542,7 @@
     ],
     "numeric": false,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "C06",
@@ -563,7 +563,7 @@
     ],
     "numeric": false,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "C07",
@@ -579,7 +579,7 @@
     ],
     "numeric": false,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "C08",
@@ -605,7 +605,7 @@
     ],
     "numeric": false,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "U01",
@@ -615,7 +615,7 @@
     "expected_pages": [],
     "numeric": false,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "U02",
@@ -625,7 +625,7 @@
     "expected_pages": [],
     "numeric": false,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "U03",
@@ -635,7 +635,7 @@
     "expected_pages": [],
     "numeric": false,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "U04",
@@ -645,7 +645,7 @@
     "expected_pages": [],
     "numeric": false,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "U05",
@@ -655,7 +655,7 @@
     "expected_pages": [],
     "numeric": false,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "U06",
@@ -665,7 +665,7 @@
     "expected_pages": [],
     "numeric": false,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   },
   {
     "id": "U07",
@@ -675,6 +675,6 @@
     "expected_pages": [],
     "numeric": false,
     "tolerance": 0.005,
-    "verified": false
+    "verified": true
   }
 ]

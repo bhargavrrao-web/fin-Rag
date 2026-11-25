@@ -1,0 +1,1007 @@
+{
+  "meta": {
+    "date": "2026-11-23T23:07:58",
+    "llm_model": "gemini/gemini-3.5-flash-lite",
+    "judge_model": "gemini/gemini-3.5-flash-lite",
+    "weak_score_threshold": 0.0,
+    "n_questions": 5
+  },
+  "summary": {
+    "A": {
+      "name": "vector-only + 1 LLM call",
+      "n": 5,
+      "n_total": 5,
+      "hit_at_5": 0.0,
+      "answer_accuracy": 0.75,
+      "refusal_accuracy": 1.0,
+      "false_refusal_rate": 0.25,
+      "avg_latency_ms": 14641.6,
+      "avg_tokens": 3688.4,
+      "avg_cost_usd": 0.00124028,
+      "errors": 0,
+      "accuracy_by_category": {
+        "lookup": 1.0,
+        "multi_step": 1.0,
+        "comparison": 0.0,
+        "unanswerable": 1.0
+      },
+      "best_rerank_score": null
+    },
+    "B": {
+      "name": "hybrid+rerank + 1 LLM call",
+      "n": 5,
+      "n_total": 5,
+      "hit_at_5": 0.5,
+      "answer_accuracy": 1.0,
+      "refusal_accuracy": 1.0,
+      "false_refusal_rate": 0.0,
+      "avg_latency_ms": 8242.6,
+      "avg_tokens": 3630.4,
+      "avg_cost_usd": 0.0012602800000000001,
+      "errors": 0,
+      "accuracy_by_category": {
+        "lookup": 1.0,
+        "multi_step": 1.0,
+        "comparison": 1.0,
+        "unanswerable": 1.0
+      },
+      "best_rerank_score": {
+        "answerable": {
+          "min": 1.3360884189605713,
+          "mean": 5.557659447193146,
+          "max": 7.813004970550537
+        },
+        "unanswerable": {
+          "min": -5.319489479064941,
+          "mean": -5.319489479064941,
+          "max": -5.319489479064941
+        }
+      }
+    },
+    "C": {
+      "name": "full agent",
+      "n": 5,
+      "n_total": 5,
+      "hit_at_5": 0.75,
+      "answer_accuracy": 0.75,
+      "refusal_accuracy": 1.0,
+      "false_refusal_rate": 0.0,
+      "avg_latency_ms": 24668.0,
+      "avg_tokens": 12797.8,
+      "avg_cost_usd": 0.003903384,
+      "errors": 0,
+      "accuracy_by_category": {
+        "lookup": 1.0,
+        "multi_step": 1.0,
+        "comparison": 0.0,
+        "unanswerable": 1.0
+      },
+      "best_rerank_score": null
+    }
+  },
+  "manual_recheck_sample": [
+    {
+      "id": "C01",
+      "config": "C",
+      "question": "Which had the higher attrition rate in fiscal 2026, Infosys (voluntary attrition) or TCS (IT services attrition)? Give both figures.",
+      "expected_answer": "TCS was higher: 13.7% for TCS versus 12.6% for Infosys.",
+      "answer": "In fiscal 2026, TCS had the higher attrition rate. TCS's IT services turnover rate for permanent employees was 13.7% total (13.8% for males, 13.4% for females). Infosys voluntary attrition figures for FY26 were not found in the documents.",
+      "correct": false,
+      "judge_reason": "The model answer failed to provide the Infosys figure of 12.6%."
+    },
+    {
+      "id": "C01",
+      "config": "B",
+      "question": "Which had the higher attrition rate in fiscal 2026, Infosys (voluntary attrition) or TCS (IT services attrition)? Give both figures.",
+      "expected_answer": "TCS was higher: 13.7% for TCS versus 12.6% for Infosys.",
+      "answer": "In fiscal 2026, the total turnover rate (voluntary attrition for IT services) for Infosys was 12.6%, while TCS's voluntary IT services attrition was 13.7%. Therefore, TCS had the higher attrition rate.",
+      "correct": true,
+      "judge_reason": "The model correctly identifies TCS as higher and provides both exact percentages (13.7% and 12.6%) as requested."
+    }
+  ],
+  "records": [
+    {
+      "id": "L01",
+      "category": "lookup",
+      "config": "A",
+      "question": "What were Infosys's consolidated revenues in fiscal 2026, in ₹ crore?",
+      "expected_answer": "178650",
+      "judge_used": false,
+      "error": null,
+      "status": "answered",
+      "answer": "Infosys's consolidated revenue was ₹1,78,650 crore in fiscal 2026.",
+      "citations": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 80
+        }
+      ],
+      "latency_ms": 57187,
+      "tokens": 3502,
+      "cost_usd": 0.0012002,
+      "n_steps": 0,
+      "retrieved": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 276,
+          "score": 0.7916942834854126
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 78,
+          "score": 0.7904660105705261
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 80,
+          "score": 0.7854440212249756
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 196,
+          "score": 0.7854249477386475
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 285,
+          "score": 0.7764000296592712
+        }
+      ],
+      "best_score": null,
+      "hit": false,
+      "correct": true,
+      "attempts": 1
+    },
+    {
+      "id": "L05",
+      "category": "lookup",
+      "config": "A",
+      "question": "What was Infosys's operating margin in fiscal 2025, in percent?",
+      "expected_answer": "21.1",
+      "judge_used": false,
+      "error": null,
+      "status": "answered",
+      "answer": "Infosys's operating margin in fiscal 2025 was 24.1% on a consolidated basis (and 21.1% on a consolidated basis according to the key financial ratios table, or 24.1% segment operating margin).",
+      "citations": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 80
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 81
+        }
+      ],
+      "latency_ms": 2225,
+      "tokens": 4511,
+      "cost_usd": 0.0016261,
+      "n_steps": 0,
+      "retrieved": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 80,
+          "score": 0.7743760347366333
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 75,
+          "score": 0.7684308290481567
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 81,
+          "score": 0.7635761499404907
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 34,
+          "score": 0.7565984725952148
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 78,
+          "score": 0.7542730569839478
+        }
+      ],
+      "best_score": null,
+      "hit": false,
+      "correct": true,
+      "attempts": 1
+    },
+    {
+      "id": "M01",
+      "category": "multi_step",
+      "config": "A",
+      "question": "By what percent did Infosys's revenue (in ₹ crore) grow from fiscal 2025 to fiscal 2026?",
+      "expected_answer": "9.61",
+      "judge_used": false,
+      "error": null,
+      "status": "answered",
+      "answer": "Infosys's revenue grew by 9.6% from fiscal 2025 to fiscal 2026.",
+      "citations": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 80
+        }
+      ],
+      "latency_ms": 3134,
+      "tokens": 4216,
+      "cost_usd": 0.0014188,
+      "n_steps": 0,
+      "retrieved": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 80,
+          "score": 0.7766904234886169
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 78,
+          "score": 0.7652093768119812
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 196,
+          "score": 0.7638164758682251
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 75,
+          "score": 0.7623897790908813
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 15,
+          "score": 0.757178544998169
+        }
+      ],
+      "best_score": null,
+      "hit": false,
+      "correct": true,
+      "attempts": 1
+    },
+    {
+      "id": "C01",
+      "category": "comparison",
+      "config": "A",
+      "question": "Which had the higher attrition rate in fiscal 2026, Infosys (voluntary attrition) or TCS (IT services attrition)? Give both figures.",
+      "expected_answer": "TCS was higher: 13.7% for TCS versus 12.6% for Infosys.",
+      "judge_used": false,
+      "error": null,
+      "status": "not_found",
+      "answer": "",
+      "citations": [],
+      "latency_ms": 3834,
+      "tokens": 2488,
+      "cost_usd": 0.0007926,
+      "n_steps": 0,
+      "retrieved": [
+        {
+          "company": "tcs",
+          "fiscal_year": 2026,
+          "page": 54,
+          "score": 0.6779133081436157
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2025,
+          "page": 81,
+          "score": 0.6758036613464355
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2025,
+          "page": 87,
+          "score": 0.6730022430419922
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2026,
+          "page": 58,
+          "score": 0.6724363565444946
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 71,
+          "score": 0.6723317503929138
+        }
+      ],
+      "best_score": null,
+      "hit": false,
+      "correct": false,
+      "attempts": 1
+    },
+    {
+      "id": "U01",
+      "category": "unanswerable",
+      "config": "A",
+      "question": "What was HCLTech's revenue in FY2026?",
+      "expected_answer": "Not in the documents (the agent should answer not_found).",
+      "judge_used": false,
+      "error": null,
+      "status": "not_found",
+      "answer": "",
+      "citations": [],
+      "latency_ms": 6828,
+      "tokens": 3725,
+      "cost_usd": 0.0011637,
+      "n_steps": 0,
+      "retrieved": [
+        {
+          "company": "wipro",
+          "fiscal_year": 2025,
+          "page": 442,
+          "score": 0.6591194868087769
+        },
+        {
+          "company": "wipro",
+          "fiscal_year": 2025,
+          "page": 229,
+          "score": 0.6577524542808533
+        },
+        {
+          "company": "wipro",
+          "fiscal_year": 2025,
+          "page": 440,
+          "score": 0.6577070951461792
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2025,
+          "page": 214,
+          "score": 0.6566578149795532
+        },
+        {
+          "company": "wipro",
+          "fiscal_year": 2026,
+          "page": 463,
+          "score": 0.656515896320343
+        }
+      ],
+      "best_score": null,
+      "hit": null,
+      "correct": true,
+      "attempts": 1
+    },
+    {
+      "id": "L01",
+      "category": "lookup",
+      "config": "B",
+      "question": "What were Infosys's consolidated revenues in fiscal 2026, in ₹ crore?",
+      "expected_answer": "178650",
+      "judge_used": false,
+      "error": null,
+      "status": "answered",
+      "answer": "Infosys's consolidated segmental revenues were ₹1,78,650 crore in fiscal 2026.",
+      "citations": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 80
+        }
+      ],
+      "latency_ms": 14383,
+      "tokens": 4230,
+      "cost_usd": 0.0014207999999999998,
+      "n_steps": 0,
+      "retrieved": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 78,
+          "score": 7.813004970550537
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 80,
+          "score": 7.288419723510742
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 75,
+          "score": 7.0116448402404785
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 276,
+          "score": 6.48060417175293
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 81,
+          "score": 6.337376594543457
+        }
+      ],
+      "best_score": 7.813004970550537,
+      "hit": false,
+      "correct": true,
+      "attempts": 1
+    },
+    {
+      "id": "L05",
+      "category": "lookup",
+      "config": "B",
+      "question": "What was Infosys's operating margin in fiscal 2025, in percent?",
+      "expected_answer": "21.1",
+      "judge_used": false,
+      "error": null,
+      "status": "answered",
+      "answer": "Infosys's operating margin in fiscal 2025 was 21.1% on a consolidated basis (and 22.6% on a standalone basis).",
+      "citations": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 81
+        }
+      ],
+      "latency_ms": 8687,
+      "tokens": 4058,
+      "cost_usd": 0.0013955999999999999,
+      "n_steps": 0,
+      "retrieved": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 78,
+          "score": 5.653443336486816
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 15,
+          "score": 5.044988632202148
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 26,
+          "score": 4.940425872802734
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 80,
+          "score": 4.860789775848389
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 81,
+          "score": 4.779972553253174
+        }
+      ],
+      "best_score": 5.653443336486816,
+      "hit": true,
+      "correct": true,
+      "attempts": 1
+    },
+    {
+      "id": "M01",
+      "category": "multi_step",
+      "config": "B",
+      "question": "By what percent did Infosys's revenue (in ₹ crore) grow from fiscal 2025 to fiscal 2026?",
+      "expected_answer": "9.61",
+      "judge_used": false,
+      "error": null,
+      "status": "answered",
+      "answer": "Infosys's consolidated revenue grew by 9.6% from fiscal 2025 to fiscal 2026 (increasing from ₹1,62,990 crore to ₹1,78,650 crore).",
+      "citations": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 77
+        }
+      ],
+      "latency_ms": 3942,
+      "tokens": 3816,
+      "cost_usd": 0.001356,
+      "n_steps": 0,
+      "retrieved": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 78,
+          "score": 7.428101062774658
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 80,
+          "score": 5.918678283691406
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 77,
+          "score": 5.906782150268555
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 75,
+          "score": 5.882143020629883
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 74,
+          "score": 5.812841892242432
+        }
+      ],
+      "best_score": 7.428101062774658,
+      "hit": false,
+      "correct": true,
+      "attempts": 1
+    },
+    {
+      "id": "C01",
+      "category": "comparison",
+      "config": "B",
+      "question": "Which had the higher attrition rate in fiscal 2026, Infosys (voluntary attrition) or TCS (IT services attrition)? Give both figures.",
+      "expected_answer": "TCS was higher: 13.7% for TCS versus 12.6% for Infosys.",
+      "judge_used": true,
+      "error": null,
+      "status": "answered",
+      "answer": "In fiscal 2026, the total turnover rate (voluntary attrition for IT services) for Infosys was 12.6%, while TCS's voluntary IT services attrition was 13.7%. Therefore, TCS had the higher attrition rate.",
+      "citations": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 144
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2026,
+          "page": 55
+        }
+      ],
+      "latency_ms": 3855,
+      "tokens": 2525,
+      "cost_usd": 0.0010259000000000002,
+      "n_steps": 0,
+      "retrieved": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 144,
+          "score": 1.3360884189605713
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 71,
+          "score": -1.4459428787231445
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2026,
+          "page": 55,
+          "score": -2.40549635887146
+        },
+        {
+          "company": "wipro",
+          "fiscal_year": 2025,
+          "page": 231,
+          "score": -2.862003803253174
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 135,
+          "score": -3.5502190589904785
+        }
+      ],
+      "best_score": 1.3360884189605713,
+      "hit": true,
+      "correct": true,
+      "judge_reason": "The model correctly identifies TCS as higher and provides both exact percentages (13.7% and 12.6%) as requested.",
+      "attempts": 1
+    },
+    {
+      "id": "U01",
+      "category": "unanswerable",
+      "config": "B",
+      "question": "What was HCLTech's revenue in FY2026?",
+      "expected_answer": "Not in the documents (the agent should answer not_found).",
+      "judge_used": false,
+      "error": null,
+      "status": "not_found",
+      "answer": "",
+      "citations": [],
+      "latency_ms": 10346,
+      "tokens": 3523,
+      "cost_usd": 0.0011031,
+      "n_steps": 0,
+      "retrieved": [
+        {
+          "company": "tcs",
+          "fiscal_year": 2026,
+          "page": 46,
+          "score": -5.319489479064941
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 254,
+          "score": -6.168680667877197
+        },
+        {
+          "company": "wipro",
+          "fiscal_year": 2025,
+          "page": 27,
+          "score": -6.361295700073242
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2026,
+          "page": 293,
+          "score": -6.721477031707764
+        },
+        {
+          "company": "wipro",
+          "fiscal_year": 2025,
+          "page": 442,
+          "score": -6.8944621086120605
+        }
+      ],
+      "best_score": -5.319489479064941,
+      "hit": null,
+      "correct": true,
+      "attempts": 1
+    },
+    {
+      "id": "L01",
+      "category": "lookup",
+      "config": "C",
+      "question": "What were Infosys's consolidated revenues in fiscal 2026, in ₹ crore?",
+      "expected_answer": "178650",
+      "judge_used": false,
+      "error": null,
+      "status": "answered",
+      "answer": "Infosys's consolidated revenues in fiscal 2026 were ₹1,78,650 crore.",
+      "citations": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 77
+        }
+      ],
+      "latency_ms": 6115,
+      "tokens": 4475,
+      "cost_usd": 0.0015823,
+      "n_steps": 1,
+      "retrieved": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 77
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 78
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 16
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 80
+        }
+      ],
+      "best_score": null,
+      "hit": true,
+      "correct": true,
+      "attempts": 1
+    },
+    {
+      "id": "L05",
+      "category": "lookup",
+      "config": "C",
+      "question": "What was Infosys's operating margin in fiscal 2025, in percent?",
+      "expected_answer": "21.1",
+      "judge_used": false,
+      "error": null,
+      "status": "answered",
+      "answer": "Infosys's consolidated operating margin in fiscal 2025 was 21.1%.",
+      "citations": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 15
+        }
+      ],
+      "latency_ms": 12336,
+      "tokens": 3523,
+      "cost_usd": 0.0012725,
+      "n_steps": 1,
+      "retrieved": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 15
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 23
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 76
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 125
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2025,
+          "page": 321
+        }
+      ],
+      "best_score": null,
+      "hit": true,
+      "correct": true,
+      "attempts": 1
+    },
+    {
+      "id": "M01",
+      "category": "multi_step",
+      "config": "C",
+      "question": "By what percent did Infosys's revenue (in ₹ crore) grow from fiscal 2025 to fiscal 2026?",
+      "expected_answer": "9.61",
+      "judge_used": false,
+      "error": null,
+      "status": "answered",
+      "answer": "Infosys's consolidated revenue (in ₹ crore) grew by 9.6% from fiscal 2025 (₹1,62,990 crore) to fiscal 2026 (₹1,78,650 crore). On a standalone basis, revenue grew by 9.0% from ₹1,36,592 crore in fiscal 2025 to ₹1,48,819 crore in fiscal 2026.",
+      "citations": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 77
+        }
+      ],
+      "latency_ms": 34206,
+      "tokens": 15799,
+      "cost_usd": 0.0054304999999999996,
+      "n_steps": 4,
+      "retrieved": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 78
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 77
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 16
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 79
+        }
+      ],
+      "best_score": null,
+      "hit": true,
+      "correct": true,
+      "attempts": 1
+    },
+    {
+      "id": "C01",
+      "category": "comparison",
+      "config": "C",
+      "question": "Which had the higher attrition rate in fiscal 2026, Infosys (voluntary attrition) or TCS (IT services attrition)? Give both figures.",
+      "expected_answer": "TCS was higher: 13.7% for TCS versus 12.6% for Infosys.",
+      "judge_used": true,
+      "error": null,
+      "status": "answered",
+      "answer": "In fiscal 2026, TCS had the higher attrition rate. TCS's IT services turnover rate for permanent employees was 13.7% total (13.8% for males, 13.4% for females). Infosys voluntary attrition figures for FY26 were not found in the documents.",
+      "citations": [
+        {
+          "company": "tcs",
+          "fiscal_year": 2026,
+          "page": 108
+        }
+      ],
+      "latency_ms": 35118,
+      "tokens": 32282,
+      "cost_usd": 0.00871782,
+      "n_steps": 5,
+      "retrieved": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 29
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 192
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 341
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 31
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 189
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 259
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 343
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 260
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2026,
+          "page": 63
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2026,
+          "page": 108
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2026,
+          "page": 5
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2026,
+          "page": 209
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2026,
+          "page": 107
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2026,
+          "page": 109
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2026,
+          "page": 119
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2026,
+          "page": 118
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2026,
+          "page": 130
+        }
+      ],
+      "best_score": null,
+      "hit": false,
+      "correct": false,
+      "judge_reason": "The model answer failed to provide the Infosys figure of 12.6%.",
+      "attempts": 1
+    },
+    {
+      "id": "U01",
+      "category": "unanswerable",
+      "config": "C",
+      "question": "What was HCLTech's revenue in FY2026?",
+      "expected_answer": "Not in the documents (the agent should answer not_found).",
+      "judge_used": false,
+      "error": null,
+      "status": "not_found",
+      "answer": "",
+      "citations": [],
+      "latency_ms": 35565,
+      "tokens": 7910,
+      "cost_usd": 0.0025138,
+      "n_steps": 2,
+      "retrieved": [
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 254
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2026,
+          "page": 46
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2025,
+          "page": 214
+        },
+        {
+          "company": "wipro",
+          "fiscal_year": 2026,
+          "page": 236
+        },
+        {
+          "company": "tcs",
+          "fiscal_year": 2025,
+          "page": 286
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 367
+        },
+        {
+          "company": "infosys",
+          "fiscal_year": 2026,
+          "page": 371
+        },
+        {
+          "company": "wipro",
+          "fiscal_year": 2025,
+          "page": 331
+        },
+        {
+          "company": "wipro",
+          "fiscal_year": 2025,
+          "page": 441
+        }
+      ],
+      "best_score": null,
+      "hit": null,
+      "correct": true,
+      "attempts": 1
+    }
+  ]
+}

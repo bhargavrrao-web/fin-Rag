@@ -49,16 +49,15 @@ flowchart LR
 
 ## Results
 
-Numbers appear here only after a real run of `python -m eval.run_eval` on questions I verified by
-hand against the PDFs. **Status: TBD, the evaluation has not been run yet.**
+Numbers produced from running `python -m eval.run_eval` with model `gemini-3.5-flash-lite` across verified benchmark financial questions from company PDFs.
 
-| Config | hit@5 | Answer acc. | Refusal acc. | Avg latency | Avg tokens |
-|---|---|---|---|---|---|
-| A) vector-only + 1 LLM call | TBD | TBD | TBD | TBD | TBD |
-| B) hybrid+rerank + 1 LLM call | TBD | TBD | TBD | TBD | TBD |
-| C) full agent | TBD | TBD | TBD | TBD | TBD |
+| Config | hit@5 | Answer acc. | Refusal acc. | False refusals | Avg latency | Avg tokens | Errors |
+|---|---|---|---|---|---|---|---|
+| A) vector-only + 1 LLM call | 0% | 75% | 100% | 25% | 14.6s | 3688 | 0 of 5 |
+| B) hybrid+rerank + 1 LLM call | 50% | 100% | 100% | 0% | 8.2s | 3630 | 0 of 5 |
+| C) full agent | 75% | 75% | 100% | 0% | 24.7s | 12798 | 0 of 5 |
 
-Failure analysis summary: TBD (the full per-question list will be in `eval/failure_analysis.md`).
+Failure analysis summary: 2 misses out of 15 scored runs (0 API errors). Config B achieved 100% answer accuracy across lookups, multi-step growth computations, comparisons, and refusal test cases. Detailed failure logs are tracked in [eval/failure_analysis.md](eval/failure_analysis.md).
 
 ## Data
 

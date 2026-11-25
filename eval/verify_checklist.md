@@ -2,139 +2,139 @@
 
 For each question: open the PDF at the page, confirm the expected answer is really there, then run `python -m eval.verify <id>`. Pages are PDF-viewer page numbers.
 
-- [ ] **L01** (lookup) What were Infosys's consolidated revenues in fiscal 2026, in ₹ crore?
+- [x] **L01** (lookup) What were Infosys's consolidated revenues in fiscal 2026, in ₹ crore?
   - Expected: 178650
   - Open `data/raw/infosys_FY26.pdf` at page 16
-- [ ] **L02** (lookup) What was Infosys's net profit in fiscal 2026, in ₹ crore?
+- [x] **L02** (lookup) What was Infosys's net profit in fiscal 2026, in ₹ crore?
   - Expected: 29440
   - Open `data/raw/infosys_FY26.pdf` at page 16
-- [ ] **L03** (lookup) What was Infosys's basic earnings per share in fiscal 2026, in ₹?
+- [x] **L03** (lookup) What was Infosys's basic earnings per share in fiscal 2026, in ₹?
   - Expected: 71.58
   - Open `data/raw/infosys_FY26.pdf` at page 16
-- [ ] **L04** (lookup) What was the voluntary attrition rate (total) for permanent employees at Infosys in fiscal 2026, in percent?
+- [x] **L04** (lookup) What was the voluntary attrition rate (total) for permanent employees at Infosys in fiscal 2026, in percent?
   - Expected: 12.6
   - Open `data/raw/infosys_FY26.pdf` at page 144
-- [ ] **L05** (lookup) What was Infosys's operating margin in fiscal 2025, in percent?
+- [x] **L05** (lookup) What was Infosys's operating margin in fiscal 2025, in percent?
   - Expected: 21.1
   - Open `data/raw/infosys_FY25.pdf` at page 15
-- [ ] **L06** (lookup) What dividend per share did Infosys report for fiscal 2025, in ₹?
+- [x] **L06** (lookup) What dividend per share did Infosys report for fiscal 2025, in ₹?
   - Expected: 43.0
   - Open `data/raw/infosys_FY25.pdf` at page 15
-- [ ] **L07** (lookup) What free cash flow did Infosys report for fiscal 2025, in ₹ crore?
+- [x] **L07** (lookup) What free cash flow did Infosys report for fiscal 2025, in ₹ crore?
   - Expected: 34549
   - Open `data/raw/infosys_FY25.pdf` at page 15
-- [ ] **L08** (lookup) What was TCS's revenue from operations in FY 2026, in ₹ crore?
+- [x] **L08** (lookup) What was TCS's revenue from operations in FY 2026, in ₹ crore?
   - Expected: 267021
   - Open `data/raw/tcs_FY26.pdf` at page 69
-- [ ] **L09** (lookup) What was TCS's reported consolidated profit attributable to shareholders of the Company in FY 2026, in ₹ crore (the 'Reported' figure, after exceptional items)?
+- [x] **L09** (lookup) What was TCS's reported consolidated profit attributable to shareholders of the Company in FY 2026, in ₹ crore (the 'Reported' figure, after exceptional items)?
   - Expected: 49210
   - Open `data/raw/tcs_FY26.pdf` at page 35
-- [ ] **L10** (lookup) How many permanent employees did TCS have at the end of FY 2026?
+- [x] **L10** (lookup) How many permanent employees did TCS have at the end of FY 2026?
   - Expected: 584519
   - Open `data/raw/tcs_FY26.pdf` at page 108
-- [ ] **L11** (lookup) What was TCS's IT services attrition rate for FY 2025, in percent?
+- [x] **L11** (lookup) What was TCS's IT services attrition rate for FY 2025, in percent?
   - Expected: 13.3
   - Open `data/raw/tcs_FY25.pdf` at page 13
   - Open `data/raw/tcs_FY25.pdf` at page 85
-- [ ] **L12** (lookup) What was TCS's IT services attrition rate for FY 2026, in percent?
+- [x] **L12** (lookup) What was TCS's IT services attrition rate for FY 2026, in percent?
   - Expected: 13.7
   - Open `data/raw/tcs_FY26.pdf` at page 55
-- [ ] **L13** (lookup) What was Wipro's revenue in FY26, in ₹ million?
+- [x] **L13** (lookup) What was Wipro's revenue in FY26, in ₹ million?
   - Expected: 928093
   - Open `data/raw/wipro_FY26.pdf` at page 25
-- [ ] **L14** (lookup) What was Wipro's operating margin in FY26, in percent?
+- [x] **L14** (lookup) What was Wipro's operating margin in FY26, in percent?
   - Expected: 16.3
   - Open `data/raw/wipro_FY26.pdf` at page 25
-- [ ] **L15** (lookup) What was Wipro's net worth in FY25, in ₹ million?
+- [x] **L15** (lookup) What was Wipro's net worth in FY25, in ₹ million?
   - Expected: 830447
   - Open `data/raw/wipro_FY25.pdf` at page 26
-- [ ] **M01** (multi_step) By what percent did Infosys's revenue (in ₹ crore) grow from fiscal 2025 to fiscal 2026?
+- [x] **M01** (multi_step) By what percent did Infosys's revenue (in ₹ crore) grow from fiscal 2025 to fiscal 2026?
   - Expected: 9.61
   - Open `data/raw/infosys_FY26.pdf` at page 16
-- [ ] **M02** (multi_step) What was Infosys's net profit margin in fiscal 2026 (net profit divided by revenues), in percent?
+- [x] **M02** (multi_step) What was Infosys's net profit margin in fiscal 2026 (net profit divided by revenues), in percent?
   - Expected: 16.48
   - Open `data/raw/infosys_FY26.pdf` at page 16
-- [ ] **M03** (multi_step) By what percent did TCS's consolidated profit attributable to shareholders, excluding exceptional items, grow from FY 2025 to FY 2026?
+- [x] **M03** (multi_step) By what percent did TCS's consolidated profit attributable to shareholders, excluding exceptional items, grow from FY 2025 to FY 2026?
   - Expected: 8.79
   - Open `data/raw/tcs_FY26.pdf` at page 35
   - Open `data/raw/tcs_FY26.pdf` at page 58
   - Open `data/raw/tcs_FY26.pdf` at page 69
-- [ ] **M04** (multi_step) What was TCS's profit margin in FY 2026, computed as consolidated profit attributable to shareholders (excluding exceptional items) divided by revenue from operations, in percent?
+- [x] **M04** (multi_step) What was TCS's profit margin in FY 2026, computed as consolidated profit attributable to shareholders (excluding exceptional items) divided by revenue from operations, in percent?
   - Expected: 19.78
   - Open `data/raw/tcs_FY26.pdf` at page 35
   - Open `data/raw/tcs_FY26.pdf` at page 58
   - Open `data/raw/tcs_FY26.pdf` at page 69
-- [ ] **M05** (multi_step) What was TCS's EBIT margin in FY 2026 (EBIT divided by revenue from operations), in percent?
+- [x] **M05** (multi_step) What was TCS's EBIT margin in FY 2026 (EBIT divided by revenue from operations), in percent?
   - Expected: 25.03
   - Open `data/raw/tcs_FY26.pdf` at page 69
-- [ ] **M06** (multi_step) By what percent did Wipro's revenue grow from FY25 to FY26, computed from the revenue figures in ₹ million?
+- [x] **M06** (multi_step) By what percent did Wipro's revenue grow from FY25 to FY26, computed from the revenue figures in ₹ million?
   - Expected: 4.17
   - Open `data/raw/wipro_FY26.pdf` at page 25
-- [ ] **M07** (multi_step) What was Wipro's net income margin in FY26 (profit attributable to equity holders divided by revenue), in percent?
+- [x] **M07** (multi_step) What was Wipro's net income margin in FY26 (profit attributable to equity holders divided by revenue), in percent?
   - Expected: 14.22
   - Open `data/raw/wipro_FY26.pdf` at page 25
-- [ ] **M08** (multi_step) By what percent did Wipro's net worth grow from FY25 to FY26?
+- [x] **M08** (multi_step) By what percent did Wipro's net worth grow from FY25 to FY26?
   - Expected: 6.92
   - Open `data/raw/wipro_FY26.pdf` at page 25
-- [ ] **M09** (multi_step) By what percent did TCS's net worth grow from FY 2025 to FY 2026?
+- [x] **M09** (multi_step) By what percent did TCS's net worth grow from FY 2025 to FY 2026?
   - Expected: 13.17
   - Open `data/raw/tcs_FY26.pdf` at page 69
-- [ ] **M10** (multi_step) By what percent did Infosys's basic earnings per share grow from fiscal 2025 to fiscal 2026?
+- [x] **M10** (multi_step) By what percent did Infosys's basic earnings per share grow from fiscal 2025 to fiscal 2026?
   - Expected: 10.98
   - Open `data/raw/infosys_FY26.pdf` at page 16
-- [ ] **C01** (comparison) Which had the higher attrition rate in fiscal 2026, Infosys (voluntary attrition) or TCS (IT services attrition)? Give both figures.
+- [x] **C01** (comparison) Which had the higher attrition rate in fiscal 2026, Infosys (voluntary attrition) or TCS (IT services attrition)? Give both figures.
   - Expected: TCS was higher: 13.7% for TCS versus 12.6% for Infosys.
   - Open `data/raw/infosys_FY26.pdf` at page 144
   - Open `data/raw/tcs_FY26.pdf` at page 55
-- [ ] **C02** (comparison) Which had the higher net profit margin in FY2026, Infosys (net profit) or TCS (reported consolidated profit attributable to shareholders)? Give both margins.
+- [x] **C02** (comparison) Which had the higher net profit margin in FY2026, Infosys (net profit) or TCS (reported consolidated profit attributable to shareholders)? Give both margins.
   - Expected: TCS: 18.43% versus Infosys: 16.48%.
   - Open `data/raw/infosys_FY26.pdf` at page 16
   - Open `data/raw/tcs_FY26.pdf` at page 35
   - Open `data/raw/tcs_FY26.pdf` at page 69
-- [ ] **C03** (comparison) Among Infosys, TCS and Wipro, which grew its revenue fastest from FY2025 to FY2026 (in ₹)? Give the growth rates.
+- [x] **C03** (comparison) Among Infosys, TCS and Wipro, which grew its revenue fastest from FY2025 to FY2026 (in ₹)? Give the growth rates.
   - Expected: Infosys, at about 9.61% versus TCS 4.58% and Wipro 4.17%.
   - Open `data/raw/infosys_FY26.pdf` at page 16
   - Open `data/raw/tcs_FY26.pdf` at page 69
   - Open `data/raw/wipro_FY26.pdf` at page 25
-- [ ] **C04** (comparison) Which of Infosys, TCS and Wipro had the largest revenue in FY2026 in rupee terms?
+- [x] **C04** (comparison) Which of Infosys, TCS and Wipro had the largest revenue in FY2026 in rupee terms?
   - Expected: TCS (₹267,021 crore), ahead of Infosys (₹178,650 crore) and Wipro (₹928,093 million, about ₹92,809 crore).
   - Open `data/raw/infosys_FY26.pdf` at page 16
   - Open `data/raw/tcs_FY26.pdf` at page 69
   - Open `data/raw/wipro_FY26.pdf` at page 25
-- [ ] **C05** (comparison) Whose net worth grew faster from FY2025 to FY2026, TCS or Wipro? Give both growth rates.
+- [x] **C05** (comparison) Whose net worth grew faster from FY2025 to FY2026, TCS or Wipro? Give both growth rates.
   - Expected: TCS: 13.17% versus Wipro: 6.92%.
   - Open `data/raw/tcs_FY26.pdf` at page 69
   - Open `data/raw/wipro_FY26.pdf` at page 25
-- [ ] **C06** (comparison) Which has the higher share of women on its Board of Directors in its latest report, Infosys or TCS? Give both percentages.
+- [x] **C06** (comparison) Which has the higher share of women on its Board of Directors in its latest report, Infosys or TCS? Give both percentages.
   - Expected: TCS at 25% versus Infosys at 22.2%.
   - Open `data/raw/infosys_FY26.pdf` at page 144
   - Open `data/raw/tcs_FY26.pdf` at page 108
-- [ ] **C07** (comparison) Did Infosys's voluntary attrition for permanent employees go up or down from fiscal 2025 to fiscal 2026? Give both figures.
+- [x] **C07** (comparison) Did Infosys's voluntary attrition for permanent employees go up or down from fiscal 2025 to fiscal 2026? Give both figures.
   - Expected: It went down: from 14.1% in fiscal 2025 to 12.6% in fiscal 2026.
   - Open `data/raw/infosys_FY26.pdf` at page 144
-- [ ] **C08** (comparison) Did TCS's IT services attrition rate rise or fall from FY 2025 to FY 2026? Give both figures.
+- [x] **C08** (comparison) Did TCS's IT services attrition rate rise or fall from FY 2025 to FY 2026? Give both figures.
   - Expected: It rose slightly: from 13.3% in FY 2025 to 13.7% in FY 2026.
   - Open `data/raw/tcs_FY25.pdf` at page 13
   - Open `data/raw/tcs_FY25.pdf` at page 85
   - Open `data/raw/tcs_FY26.pdf` at page 55
-- [ ] **U01** (unanswerable) What was HCLTech's revenue in FY2026?
+- [x] **U01** (unanswerable) What was HCLTech's revenue in FY2026?
   - Expected: Not in the documents (the agent should answer not_found).
   - Unanswerable: confirm the reports really do not contain this (search the PDFs for the key terms).
-- [ ] **U02** (unanswerable) What will Infosys's revenue be in fiscal 2030?
+- [x] **U02** (unanswerable) What will Infosys's revenue be in fiscal 2030?
   - Expected: Not in the documents (the agent should answer not_found).
   - Unanswerable: confirm the reports really do not contain this (search the PDFs for the key terms).
-- [ ] **U03** (unanswerable) What was Cognizant's attrition rate in 2025?
+- [x] **U03** (unanswerable) What was Cognizant's attrition rate in 2025?
   - Expected: Not in the documents (the agent should answer not_found).
   - Unanswerable: confirm the reports really do not contain this (search the PDFs for the key terms).
-- [ ] **U04** (unanswerable) What is Wipro's market share in the Brazilian banking sector?
+- [x] **U04** (unanswerable) What is Wipro's market share in the Brazilian banking sector?
   - Expected: Not in the documents (the agent should answer not_found).
   - Unanswerable: confirm the reports really do not contain this (search the PDFs for the key terms).
-- [ ] **U05** (unanswerable) What was Accenture's revenue growth in 2025?
+- [x] **U05** (unanswerable) What was Accenture's revenue growth in 2025?
   - Expected: Not in the documents (the agent should answer not_found).
   - Unanswerable: confirm the reports really do not contain this (search the PDFs for the key terms).
-- [ ] **U06** (unanswerable) What was Infosys's closing share price on 15 August 2025?
+- [x] **U06** (unanswerable) What was Infosys's closing share price on 15 August 2025?
   - Expected: Not in the documents (the agent should answer not_found).
   - Unanswerable: confirm the reports really do not contain this (search the PDFs for the key terms).
-- [ ] **U07** (unanswerable) How many freshers will TCS hire in FY2027?
+- [x] **U07** (unanswerable) How many freshers will TCS hire in FY2027?
   - Expected: Not in the documents (the agent should answer not_found).
   - Unanswerable: confirm the reports really do not contain this (search the PDFs for the key terms).
