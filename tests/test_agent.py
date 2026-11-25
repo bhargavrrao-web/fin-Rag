@@ -120,3 +120,11 @@ def test_llm_kwargs_adds_fallback_only_when_configured():
     assert "fallbacks" not in base and base["drop_params"] is True and base["num_retries"] == 2
     with_fb = llm_kwargs(Settings(_env_file=None, llm_fallback_model="gemini/other"))
     assert with_fb["fallbacks"] == ["gemini/other"]
+
+
+def test_empty_answer_is_rejected_and_retried():
+    empty = json.dumps({"answer": "  ", "citations": [], "status": "not_found"})
+    llm = ScriptedLLM(text_msg(empty), text_msg(FINAL))
+    r = run_agent("q", BOX, SETTINGS, completion=llm)
+    assert r.status == "answered" and len(llm.calls) == 2
+    assert "empty" in llm.calls[1]["messages"][-1]["content"]

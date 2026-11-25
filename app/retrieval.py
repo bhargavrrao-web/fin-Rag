@@ -163,8 +163,19 @@ class Retriever:
         if not pool:
             return []
         scores = self.rerank_scores(query, [self.chunks[cid]["text"] for cid, _ in pool])
-        ranked = sorted(zip(pool, scores, strict=True), key=lambda x: -x[1])
-        return [self._hit(cid, float(s), source(cid)) for (cid, _), s in ranked[:top_k]]
+        # Reordering by the cross-encoder alone can bury a page that both retrievers ranked
+        # near the top (the MS-MARCO model is weak on tables and figures in prose). So the
+        # final order fuses the first-stage rank with the cross-encoder rank (RRF again).
+        # The hit's score stays the cross-encoder logit: it is the refusal signal.
+        ce_order = sorted(range(len(pool)), key=lambda i: -scores[i])
+        ce_rank = {i: r for r, i in enumerate(ce_order, start=1)}
+        blended = sorted(
+            range(len(pool)),
+            key=lambda i: -(1.0 / (RRF_K + i + 1) + 1.0 / (RRF_K + ce_rank[i])),
+        )
+        return [
+            self._hit(pool[i][0], float(scores[i]), source(pool[i][0])) for i in blended[:top_k]
+        ]
 
 
 def main() -> None:

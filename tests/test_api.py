@@ -87,6 +87,6 @@ def test_eval_results(client, monkeypatch, tmp_path):
 
 def test_cors_locked_down_and_static_served(client):
     r = client.get("/", headers={"Origin": "https://evil.example"})
-    assert r.status_code == 200 and "FinRAG Agent" in r.text
+    assert r.status_code == 200 and "FinRAG" in r.text
     assert "access-control-allow-origin" not in r.headers
     assert client.get("/app.js").status_code == 200

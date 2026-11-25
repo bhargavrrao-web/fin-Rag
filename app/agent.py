@@ -37,7 +37,8 @@ hit looks right but you need the surrounding numbers or table.
 - Use the calculator for ANY arithmetic (growth rates, margins, differences). Never compute \
 in your head.
 - ALWAYS cite: every fact in your answer must come from a page you saw in tool results.
-- Figures such as attrition or headcount often sit in running prose, not tables. If the top hits do not contain the figure, search again with top_k 10 before giving up.
+- Figures such as attrition or headcount often sit in running prose, not tables. If the top \
+hits do not contain the figure, search again with top_k 10 before giving up.
 - The "answer" field must never be empty, even for not_found.
 - If search results say evidence_weak, try at most one differently-worded search. If the \
 documents still do not contain the answer, answer with status "not_found". Do not guess.

@@ -82,3 +82,20 @@ def test_bad_mode(retriever):
 def test_rrf_rewards_agreement():
     fused = Retriever._rrf([[(1, 0.9), (2, 0.8)], [(2, 5.0), (3, 4.0)]])
     assert fused[0][0] == 2  # chunk 2 appears in both lists, so it wins
+
+
+def test_rerank_blends_with_first_stage_rank():
+    """A chunk that ranks first in hybrid search must not be buried by a weak reranker."""
+    chunks = [
+        {"text": f"filler words {i}", "company": "a", "fiscal_year": 2025, "page": i,
+         "type": "text", "doc_id": "a_FY25"}
+        for i in range(1, 7)
+    ]
+    chunks[0]["text"] = "attrition attrition attrition"  # the obvious lexical match
+    index = faiss.IndexFlatIP(4)
+    index.add(np.eye(6, 4, dtype="float32") + 0.01)
+    # reranker that scores the true match worst and everything else equal
+    rerank = lambda q, texts: [(-5.0 if "attrition" in t else 1.0) for t in texts]  # noqa: E731
+    r = Retriever(chunks, index, embed_query=lambda q: np.ones(4, dtype="float32"), rerank=rerank)
+    pages = [h.page for h in r.search("attrition", mode="hybrid_rerank", top_k=3)]
+    assert 1 in pages

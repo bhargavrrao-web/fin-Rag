@@ -209,7 +209,7 @@ function setBusy(on) {
   $("spinner").hidden = !on;
   $("submit-label").textContent = on ? "Working" : "Get answer";
 }
-function scrollTo(node) {
+function scrollToTurn(node) {
   node.scrollIntoView({ behavior: reduceMotion() ? "auto" : "smooth", block: "start" });
 }
 
@@ -235,7 +235,7 @@ async function ask(question) {
   working.append(elapsed, sk);
   turn.appendChild(working);
   thread.appendChild(turn);
-  scrollTo(turn);
+  scrollToTurn(turn);
   input.value = ""; growInput(); updateCounter();
 
   const t0 = performance.now();
@@ -256,7 +256,7 @@ async function ask(question) {
   } finally {
     setBusy(false);
   }
-  scrollTo(turn);
+  scrollToTurn(turn);
 }
 
 function errorMessage(status, detail) {
